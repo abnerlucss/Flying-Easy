@@ -1,0 +1,96 @@
+import 'dart:ui';
+
+import 'package:app_passagens_aereas/modules/shared/widgets/base_view.dart';
+import 'package:app_passagens_aereas/modules/shared/widgets/blue_button.dart';
+import 'package:app_passagens_aereas/modules/shared/widgets/white_button.dart';
+import 'package:flutter/material.dart';
+
+class BasicCreateAccount extends StatefulWidget {
+  const BasicCreateAccount({
+    Key? key,
+    required this.titleTextStep,
+    required this.textFields,
+    required this.blueButtonText,
+    required this.whiteButtonText,
+    required this.txtFieldController1,
+    required this.txtFieldController2,
+    this.txtFieldController3,
+    required this.onTap,
+  }) : super(key: key);
+
+  final String titleTextStep;
+  final Column textFields;
+  final String blueButtonText;
+  final String whiteButtonText;
+  final TextEditingController txtFieldController1;
+  final TextEditingController txtFieldController2;
+  final TextEditingController? txtFieldController3;
+  final Function() onTap;
+
+  @override
+  _BasicCreateAccountState createState() => _BasicCreateAccountState();
+}
+
+class _BasicCreateAccountState extends State<BasicCreateAccount> {
+  final _formKey = GlobalKey<FormState>();
+
+  @override
+  Widget build(BuildContext context) {
+    return BaseView(
+      formKey: _formKey,
+      widgets: [
+        SizedBox(
+          height: 30,
+        ),
+        Center(
+          child: Text(
+            widget.titleTextStep,
+            style: TextStyle(color: Color(0xFF4B6584), fontSize: 36),
+          ),
+        ),
+        SizedBox(
+          height: 100,
+        ),
+        widget.textFields,
+        SizedBox(
+          height: 80,
+        ),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            ConstrainedBox(
+                constraints: BoxConstraints.tightFor(width: 150, height: 40),
+                child: WhiteButton(
+                  buttonText: widget.whiteButtonText,
+                  onPressed: () {
+                    Navigator.pop(context);
+                  },
+                )),
+            SizedBox(
+              width: 10,
+            ),
+            ConstrainedBox(
+              constraints: BoxConstraints.tightFor(width: 150, height: 40),
+              child: BlueButton(
+                  buttonText: widget.blueButtonText,
+                  onPressed: () {
+                    if (!_formKey.currentState!.validate()) {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(
+                            content: Text('Preencha todos os campos')),
+                      );
+                    } else {
+                      // print(widget.txtFieldController1.text);
+                      // print(widget.txtFieldController2.text);
+                      // print(widget.txtFieldController3?.text);
+
+                      widget.onTap();
+                    }
+                  }),
+            ),
+          ],
+        )
+      ],
+    );
+  }
+}
