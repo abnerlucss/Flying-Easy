@@ -16,6 +16,7 @@ class BasicCreateAccount extends StatefulWidget {
     required this.txtFieldController2,
     this.txtFieldController3,
     required this.onTap,
+    required this.onTapFailed,
   }) : super(key: key);
 
   final String titleTextStep;
@@ -26,6 +27,7 @@ class BasicCreateAccount extends StatefulWidget {
   final TextEditingController txtFieldController2;
   final TextEditingController? txtFieldController3;
   final Function() onTap;
+  final Function() onTapFailed;
 
   @override
   _BasicCreateAccountState createState() => _BasicCreateAccountState();
@@ -75,15 +77,8 @@ class _BasicCreateAccountState extends State<BasicCreateAccount> {
                   buttonText: widget.blueButtonText,
                   onPressed: () {
                     if (!_formKey.currentState!.validate()) {
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        const SnackBar(
-                            content: Text('Preencha todos os campos')),
-                      );
+                      widget.onTapFailed();
                     } else {
-                      // print(widget.txtFieldController1.text);
-                      // print(widget.txtFieldController2.text);
-                      // print(widget.txtFieldController3?.text);
-
                       widget.onTap();
                     }
                   }),

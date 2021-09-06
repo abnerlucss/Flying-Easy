@@ -24,6 +24,19 @@ class _CreateAccountStep3PageState extends State<CreateAccountStep3Page> {
         onTap: () {
           widget.createAccountModel.password = passwordController.text;
         },
+        onTapFailed: () {
+          if (passwordController.text.isEmpty ||
+              passwordConfirmationController.text.isEmpty) {
+            ScaffoldMessenger.of(context).showSnackBar(
+              const SnackBar(content: Text('Preencha todos os campos')),
+            );
+          } else if (passwordController.text !=
+              passwordConfirmationController.text) {
+            ScaffoldMessenger.of(context).showSnackBar(
+              const SnackBar(content: Text('As senhas não coincidem')),
+            );
+          }
+        },
         txtFieldController1: passwordController,
         txtFieldController2: passwordConfirmationController,
         titleTextStep: "Etapa 3 de 3",
@@ -41,7 +54,7 @@ class _CreateAccountStep3PageState extends State<CreateAccountStep3Page> {
               controller: passwordConfirmationController,
               labelTextField: "Confirme a senha",
               validator: (text) {
-                if (text!.isEmpty) return "";
+                if (text!.isEmpty || passwordController.text != text) return "";
               },
             )
           ],

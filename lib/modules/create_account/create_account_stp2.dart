@@ -44,6 +44,7 @@ class _CreateAccountStep2PageState extends State<CreateAccountStep2Page> {
                         createAccountModel: widget.createAccountModel,
                       )));
         },
+        onTapFailed: () {},
         txtFieldController1: cpfController,
         txtFieldController2: emailController,
         txtFieldController3: phoneController,
