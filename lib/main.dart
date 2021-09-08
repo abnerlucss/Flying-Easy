@@ -1,4 +1,5 @@
 import 'package:app_passagens_aereas/modules/create_account/create_account_cubit/create_account_cubit.dart';
+import 'package:app_passagens_aereas/modules/login/login_cubit/login_cubit.dart';
 import 'package:app_passagens_aereas/modules/login/login_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -16,6 +17,9 @@ class MyApp extends StatelessWidget {
         BlocProvider(
           create: (context) => CreateAccountCubit(),
         ),
+        BlocProvider(
+          create: (context) => LoginCubit(),
+        )
       ],
       child: MaterialApp(
         title: 'Passagens Aéreas',
