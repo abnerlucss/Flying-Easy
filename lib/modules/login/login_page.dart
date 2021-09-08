@@ -1,7 +1,9 @@
 import 'package:app_passagens_aereas/modules/create_account/create_account_stp1.dart';
 import 'package:app_passagens_aereas/modules/shared/widgets/base_view.dart';
+import 'package:app_passagens_aereas/modules/shared/widgets/custom_txt_field.dart';
 import 'package:app_passagens_aereas/modules/shared/widgets/custom_txt_field_password.dart';
 import 'package:flutter/material.dart';
+import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({Key? key}) : super(key: key);
@@ -12,6 +14,9 @@ class LoginPage extends StatefulWidget {
 
 class _LoginPageState extends State<LoginPage> {
   bool obscureText = true;
+
+  final maskCpf = MaskTextInputFormatter(
+      mask: "###.###.###-##", filter: {"#": RegExp(r'[0-9]')});
 
   final loginController = TextEditingController();
   final passwordController = TextEditingController();
@@ -33,30 +38,11 @@ class _LoginPageState extends State<LoginPage> {
       SizedBox(
         height: 55,
       ),
-      Text(
-        "CPF",
-        style: TextStyle(fontSize: 20),
-      ),
-      Container(
-        decoration: new BoxDecoration(
-            color: Color(0XFFE2E2E2),
-            borderRadius: new BorderRadius.circular(8.0)),
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 15),
-          child: TextFormField(
-            controller: loginController,
-            cursorColor: Color(0xFF4B6584),
-            keyboardType: TextInputType.number,
-            decoration: InputDecoration(
-              border: InputBorder.none,
-              labelStyle: TextStyle(
-                fontSize: 20,
-                color: Color(0xFF4B6584),
-              ),
-            ),
-          ),
-        ),
-      ),
+      CustomTextField(
+          formatter: maskCpf,
+          labelTextField: "CPF",
+          textInputType: TextInputType.number,
+          controller: loginController),
       SizedBox(
         height: 45,
       ),

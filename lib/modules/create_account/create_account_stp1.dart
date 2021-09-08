@@ -36,7 +36,13 @@ class _CreateAccountStep1PageState extends State<CreateAccountStep1Page> {
                       createAccountModel: createAccountModel,
                     )));
       },
-      onTapFailed: () {},
+      onTapFailed: () {
+        if (nameController.text.isEmpty || dateController.text.isEmpty) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(content: Text('Preencha todos os campos')),
+          );
+        }
+      },
       txtFieldController1: nameController,
       txtFieldController2: dateController,
       titleTextStep: "Etapa 1 de 3",

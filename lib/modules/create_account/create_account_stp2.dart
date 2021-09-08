@@ -12,7 +12,7 @@ final maskCpf = MaskTextInputFormatter(
     mask: "###.###.###-##", filter: {"#": RegExp(r'[0-9]')});
 
 final maskTel = new MaskTextInputFormatter(
-    mask: '+## (##) # ####-####', filter: {"#": RegExp(r'[0-9]')});
+    mask: '(##) # ####-####', filter: {"#": RegExp(r'[0-9]')});
 
 class CreateAccountStep2Page extends StatefulWidget {
   const CreateAccountStep2Page({Key? key, required this.createAccountModel})
@@ -44,7 +44,22 @@ class _CreateAccountStep2PageState extends State<CreateAccountStep2Page> {
                         createAccountModel: widget.createAccountModel,
                       )));
         },
-        onTapFailed: () {},
+        onTapFailed: () {
+          if (cpfController.text.isEmpty || cpfController.text.length < 14) {
+            ScaffoldMessenger.of(context).showSnackBar(
+              const SnackBar(content: Text('Preencha o CPF corretamente')),
+            );
+          } else if (!RegExp(
+                  r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
+              .hasMatch(emailController.text)) {
+            ScaffoldMessenger.of(context).showSnackBar(
+              const SnackBar(content: Text('Preencha o email corretamente')),
+            );
+          } else if (phoneController.text.isEmpty) {
+            ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(content: Text("Preencha o telefone corretamente")));
+          }
+        },
         txtFieldController1: cpfController,
         txtFieldController2: emailController,
         txtFieldController3: phoneController,
@@ -55,7 +70,6 @@ class _CreateAccountStep2PageState extends State<CreateAccountStep2Page> {
               controller: cpfController,
               formatter: maskCpf,
               labelTextField: "CPF",
-              hintText: "123.123.123-12",
               textInputType: TextInputType.number,
               validator: (text) {
                 if (text!.isEmpty) return "O CPF não pode ser nulo";
@@ -64,7 +78,6 @@ class _CreateAccountStep2PageState extends State<CreateAccountStep2Page> {
             SpacingTextFormFields(),
             CustomTextField(
               controller: emailController,
-              hintText: "joao@adress.com",
               labelTextField: "Email",
               textInputType: TextInputType.emailAddress,
               validator: (text) {
@@ -74,7 +87,7 @@ class _CreateAccountStep2PageState extends State<CreateAccountStep2Page> {
             SpacingTextFormFields(),
             CustomTextField(
               controller: phoneController,
-              hintText: "+55 (11) 9 9876-5432",
+              hintText: "(11) 9 9876-5432",
               formatter: maskTel,
               labelTextField: "Telefone",
               textInputType: TextInputType.phone,

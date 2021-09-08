@@ -1,5 +1,7 @@
+import 'package:app_passagens_aereas/modules/create_account/create_account_cubit/create_account_cubit.dart';
 import 'package:app_passagens_aereas/modules/login/login_page.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 void main() {
   runApp(MyApp());
@@ -9,13 +11,20 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Passagens Aéreas',
-      theme: ThemeData(
-        fontFamily: 'OpenSans',
-        primarySwatch: Colors.blue,
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(
+          create: (context) => CreateAccountCubit(),
+        ),
+      ],
+      child: MaterialApp(
+        title: 'Passagens Aéreas',
+        theme: ThemeData(
+          fontFamily: 'OpenSans',
+          primarySwatch: Colors.blue,
+        ),
+        home: LoginPage(),
       ),
-      home: LoginPage(),
     );
   }
 }
