@@ -2,7 +2,7 @@ import 'package:app_passagens_aereas/modules/create_account/models/create_accoun
 import 'package:dio/dio.dart';
 
 class CreateAccountService {
-  Future postHttp(CreateAccountModel accountJsonObject) async {
+  Future postAccount(CreateAccountModel accountJsonObject) async {
     try {
       var response = await Dio().post(
           'https://msv-passagem.herokuapp.com/v1/passageiro',

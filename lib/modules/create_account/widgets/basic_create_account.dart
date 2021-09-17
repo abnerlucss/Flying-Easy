@@ -1,8 +1,8 @@
 import 'dart:ui';
 
 import 'package:app_passagens_aereas/modules/create_account/create_account_cubit/create_account_cubit.dart';
-import 'package:app_passagens_aereas/modules/shared/widgets/util/basic_state_enum.dart';
-import 'package:app_passagens_aereas/modules/login/onboarding_page.dart';
+import 'package:app_passagens_aereas/modules/onboarding/onboarding_page.dart';
+import 'package:app_passagens_aereas/modules/shared/util/basic_state_enum.dart';
 import 'package:app_passagens_aereas/modules/shared/widgets/base_view.dart';
 import 'package:app_passagens_aereas/modules/shared/widgets/blue_button.dart';
 import 'package:app_passagens_aereas/modules/shared/widgets/white_button.dart';

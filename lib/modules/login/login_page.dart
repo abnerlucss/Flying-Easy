@@ -1,16 +1,16 @@
-import 'package:app_passagens_aereas/modules/create_account/create_account_cubit/create_account_cubit.dart';
 import 'package:app_passagens_aereas/modules/create_account/create_account_stp1.dart';
 import 'package:app_passagens_aereas/modules/login/login_cubit/login_cubit.dart';
 import 'package:app_passagens_aereas/modules/login/models/login_model.dart';
+import 'package:app_passagens_aereas/modules/shared/constants/image_constants.dart';
+import 'package:app_passagens_aereas/modules/shared/util/basic_state_enum.dart';
 import 'package:app_passagens_aereas/modules/shared/widgets/base_view.dart';
 import 'package:app_passagens_aereas/modules/shared/widgets/custom_txt_field.dart';
 import 'package:app_passagens_aereas/modules/shared/widgets/custom_txt_field_password.dart';
-import 'package:app_passagens_aereas/modules/shared/widgets/util/basic_state_enum.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 
-import 'onboarding_page.dart';
+import '../onboarding/onboarding_page.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({Key? key}) : super(key: key);
@@ -23,7 +23,9 @@ class _LoginPageState extends State<LoginPage> {
   bool obscureText = true;
 
   final maskCpf = MaskTextInputFormatter(
-      mask: "###.###.###-##", filter: {"#": RegExp(r'[0-9]')});
+    mask: "###.###.###-##",
+    filter: {"#": RegExp(r'[0-9]')},
+  );
 
   final loginController = TextEditingController();
   final passwordController = TextEditingController();
@@ -34,44 +36,27 @@ class _LoginPageState extends State<LoginPage> {
   Widget build(BuildContext context) {
     return BlocConsumer<LoginCubit, BasicStateEnum>(
       listener: (context, state) {
-        if (state == BasicStateEnum.success) {
-          Navigator.push(context,
-              MaterialPageRoute(builder: (context) => OnboardingPage()));
-        }
-        if (state == BasicStateEnum.failed) {
-          ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(content: Text('Login e/ou senha inválidos')),
-          );
-        }
+        checkState(state, context);
       },
       builder: (context, state) {
         if (state == BasicStateEnum.load) {
-          return Scaffold(
-            body: Center(
-              child: CircularProgressIndicator(
-                backgroundColor: Color(0xFF4B6584),
-              ),
-            ),
-          );
+          return load();
         }
         return BaseView(
+          background: Image(
+            image: AssetImage(ImagesConstants.loginCircles),
+            fit: BoxFit.contain,
+            height: 350,
+            width: 500,
+            alignment: Alignment.bottomCenter,
+          ),
           formKey: _formKey,
           widgets: [
-            Center(child: Image.asset("assets/travel.png", width: 280)),
-            SizedBox(
-              height: 45,
-            ),
             Center(
-              child: Text(
-                "Passagens Aéreas",
-                style: TextStyle(
-                    color: Color(0xFF4B6584),
-                    fontSize: 35,
-                    fontFamily: "Open Sans"),
+              child: Image.asset(
+                ImagesConstants.homeLogo,
+                width: 600,
               ),
-            ),
-            SizedBox(
-              height: 55,
             ),
             Column(
               children: [
@@ -81,7 +66,7 @@ class _LoginPageState extends State<LoginPage> {
                     textInputType: TextInputType.number,
                     controller: loginController),
                 SizedBox(
-                  height: 45,
+                  height: 60,
                 ),
                 CustomTextFieldPassword(
                   controller: passwordController,
@@ -91,7 +76,7 @@ class _LoginPageState extends State<LoginPage> {
                   },
                 ),
                 SizedBox(
-                  height: 50,
+                  height: 100,
                 ),
               ],
             ),
@@ -101,23 +86,18 @@ class _LoginPageState extends State<LoginPage> {
                 child: ElevatedButton(
                   onPressed: () {
                     if (!_formKey.currentState!.validate()) {
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        const SnackBar(
-                            content: Text('Preencha todos os campos')),
-                      );
+                      onTapFailed(context);
                     } else {
-                      loginModel.cpf = loginController.text;
-                      loginModel.senha = passwordController.text;
-
-                      print(loginModel);
-
-                      BlocProvider.of<LoginCubit>(context)
-                          .postLogin(loginModel);
+                      onTap(context);
                     }
                   },
                   child: Text(
                     "Entrar",
-                    style: TextStyle(fontSize: 18),
+                    style: TextStyle(
+                      fontSize: 18,
+                      color: Color(0XFF000000),
+                      fontWeight: FontWeight.w700,
+                    ),
                   ),
                   style: ButtonStyle(
                     shape: MaterialStateProperty.all(
@@ -126,7 +106,7 @@ class _LoginPageState extends State<LoginPage> {
                       ),
                     ),
                     backgroundColor:
-                        MaterialStateProperty.all(Color(0xFF4B6584)),
+                        MaterialStateProperty.all(Color(0XFFF1F1F1)),
                   ),
                 ),
               ),
@@ -135,20 +115,62 @@ class _LoginPageState extends State<LoginPage> {
               height: 25,
             ),
             Center(
-                child: TextButton(
-                    onPressed: () {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => CreateAccountStep1Page()));
-                    },
-                    child: Text(
-                      "Cadastre-se",
-                      style: TextStyle(fontSize: 18),
-                    )))
+              child: TextButton(
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => CreateAccountStep1Page(),
+                    ),
+                  );
+                },
+                child: Text(
+                  "Cadastre-se",
+                  style: TextStyle(fontSize: 18),
+                ),
+              ),
+            )
           ],
         );
       },
     );
+  }
+
+  void onTap(BuildContext context) {
+    loginModel.cpf = loginController.text;
+    loginModel.senha = passwordController.text;
+
+    print(loginModel);
+
+    BlocProvider.of<LoginCubit>(context).postLogin(loginModel);
+  }
+
+  void onTapFailed(BuildContext context) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      const SnackBar(
+        content: Text('Preencha todos os campos'),
+      ),
+    );
+  }
+
+  Scaffold load() {
+    return Scaffold(
+      body: Center(
+        child: CircularProgressIndicator(
+          backgroundColor: Color(0xFF4B6584),
+        ),
+      ),
+    );
+  }
+
+  void checkState(BasicStateEnum state, BuildContext context) {
+    if (state == BasicStateEnum.success) {
+      Navigator.push(
+          context, MaterialPageRoute(builder: (context) => OnboardingPage()));
+    } else if (state == BasicStateEnum.failed) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Login e/ou senha inválidos')),
+      );
+    }
   }
 }
