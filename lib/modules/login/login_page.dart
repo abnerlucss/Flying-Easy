@@ -43,19 +43,24 @@ class _LoginPageState extends State<LoginPage> {
           return load();
         }
         return BaseView(
-          background: Image(
-            image: AssetImage(ImagesConstants.loginCircles),
-            fit: BoxFit.contain,
-            height: 350,
-            width: 500,
-            alignment: Alignment.bottomCenter,
-          ),
           formKey: _formKey,
+          background: Positioned.fill(
+            child: Image(
+              image: AssetImage(ImagesConstants.loginCircles),
+              alignment: Alignment.bottomCenter,
+              height: 100,
+            ),
+          ),
           widgets: [
+            SizedBox(
+              height: .1 * MediaQuery.of(context).size.height,
+            ),
             Center(
               child: Image.asset(
                 ImagesConstants.homeLogo,
-                width: 600,
+                height: .3 * MediaQuery.of(context).size.height,
+                width: 400,
+                fit: BoxFit.cover,
               ),
             ),
             Column(
@@ -66,7 +71,7 @@ class _LoginPageState extends State<LoginPage> {
                     textInputType: TextInputType.number,
                     controller: loginController),
                 SizedBox(
-                  height: 60,
+                  height: .05 * MediaQuery.of(context).size.height,
                 ),
                 CustomTextFieldPassword(
                   controller: passwordController,
@@ -76,13 +81,16 @@ class _LoginPageState extends State<LoginPage> {
                   },
                 ),
                 SizedBox(
-                  height: 100,
+                  height: .08 * MediaQuery.of(context).size.height,
                 ),
               ],
             ),
             Center(
               child: ConstrainedBox(
-                constraints: BoxConstraints.tightFor(width: 166, height: 41),
+                constraints: BoxConstraints.tightFor(
+                  width: 166,
+                  height: .05 * MediaQuery.of(context).size.height,
+                ),
                 child: ElevatedButton(
                   onPressed: () {
                     if (!_formKey.currentState!.validate()) {
@@ -112,7 +120,7 @@ class _LoginPageState extends State<LoginPage> {
               ),
             ),
             SizedBox(
-              height: 25,
+              height: .02 * MediaQuery.of(context).size.height,
             ),
             Center(
               child: TextButton(
@@ -129,7 +137,10 @@ class _LoginPageState extends State<LoginPage> {
                   style: TextStyle(fontSize: 18),
                 ),
               ),
-            )
+            ),
+            SizedBox(
+              height: .28 * MediaQuery.of(context).size.height,
+            ),
           ],
         );
       },

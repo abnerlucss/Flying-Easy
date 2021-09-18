@@ -36,8 +36,9 @@ class CustomTextField extends StatelessWidget {
           ),
           Container(
             decoration: new BoxDecoration(
-                color: Color(0XFFF1F1F1),
-                borderRadius: new BorderRadius.circular(8.0)),
+              color: Color(0XFFF1F1F1),
+              borderRadius: new BorderRadius.circular(8.0),
+            ),
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 15),
               child: TextFormField(

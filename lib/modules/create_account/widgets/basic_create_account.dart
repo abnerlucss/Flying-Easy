@@ -2,6 +2,7 @@ import 'dart:ui';
 
 import 'package:app_passagens_aereas/modules/create_account/create_account_cubit/create_account_cubit.dart';
 import 'package:app_passagens_aereas/modules/onboarding/onboarding_page.dart';
+import 'package:app_passagens_aereas/modules/shared/constants/image_constants.dart';
 import 'package:app_passagens_aereas/modules/shared/util/basic_state_enum.dart';
 import 'package:app_passagens_aereas/modules/shared/widgets/base_view.dart';
 import 'package:app_passagens_aereas/modules/shared/widgets/blue_button.dart';
@@ -21,6 +22,7 @@ class BasicCreateAccount extends StatefulWidget {
     this.txtFieldController3,
     required this.onTap,
     required this.onTapFailed,
+    required this.urlImgBackground,
   }) : super(key: key);
 
   final String titleTextStep;
@@ -30,6 +32,7 @@ class BasicCreateAccount extends StatefulWidget {
   final TextEditingController txtFieldController1;
   final TextEditingController txtFieldController2;
   final TextEditingController? txtFieldController3;
+  final String urlImgBackground;
   final Function() onTap;
   final Function() onTapFailed;
 
@@ -43,59 +46,62 @@ class _BasicCreateAccountState extends State<BasicCreateAccount> {
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<CreateAccountCubit, BasicStateEnum>(
-        listener: (context, state) {
-      if (state == BasicStateEnum.success) {
-        Navigator.push(
-            context, MaterialPageRoute(builder: (context) => OnboardingPage()));
-      }
-    }, builder: (context, state) {
-      if (state == BasicStateEnum.load) {
+      listener: (context, state) {
+        if (state == BasicStateEnum.success) {
+          Navigator.push(context,
+              MaterialPageRoute(builder: (context) => OnboardingPage()));
+        }
+      },
+      builder: (context, state) {
+        if (state == BasicStateEnum.load) {
+          return BaseView(
+            widgets: [
+              Center(
+                child: CircularProgressIndicator(
+                  backgroundColor: Color(0xFF4B6584),
+                ),
+              )
+            ],
+          );
+        }
         return BaseView(
-          widgets: [
-            Center(
-              child: CircularProgressIndicator(
-                backgroundColor: Color(0xFF4B6584),
-              ),
-            )
-          ],
-        );
-      }
-      return BaseView(
-        formKey: _formKey,
-        widgets: [
-          SizedBox(
-            height: 30,
-          ),
-          Center(
-            child: Text(
-              widget.titleTextStep,
-              style: TextStyle(color: Color(0xFF4B6584), fontSize: 36),
+          background: Positioned.fill(
+            child: Image(
+              image: AssetImage(widget.urlImgBackground),
+              alignment: Alignment.topCenter,
+              height: 100,
             ),
           ),
-          SizedBox(
-            height: 100,
-          ),
-          widget.textFields,
-          SizedBox(
-            height: 80,
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              ConstrainedBox(
+          formKey: _formKey,
+          widgets: [
+            SizedBox(
+              height: .15 * MediaQuery.of(context).size.height,
+            ),
+            SizedBox(
+              height: .2 * MediaQuery.of(context).size.height,
+            ),
+            widget.textFields,
+            SizedBox(
+              height: .10 * MediaQuery.of(context).size.height,
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                ConstrainedBox(
+                    constraints:
+                        BoxConstraints.tightFor(width: 150, height: 40),
+                    child: WhiteButton(
+                      buttonText: widget.whiteButtonText,
+                      onPressed: () {
+                        Navigator.pop(context);
+                      },
+                    )),
+                SizedBox(
+                  width: 10,
+                ),
+                ConstrainedBox(
                   constraints: BoxConstraints.tightFor(width: 150, height: 40),
-                  child: WhiteButton(
-                    buttonText: widget.whiteButtonText,
-                    onPressed: () {
-                      Navigator.pop(context);
-                    },
-                  )),
-              SizedBox(
-                width: 10,
-              ),
-              ConstrainedBox(
-                constraints: BoxConstraints.tightFor(width: 150, height: 40),
-                child: BlueButton(
+                  child: BlueButton(
                     buttonText: widget.blueButtonText,
                     onPressed: () {
                       if (!_formKey.currentState!.validate()) {
@@ -103,12 +109,17 @@ class _BasicCreateAccountState extends State<BasicCreateAccount> {
                       } else {
                         widget.onTap();
                       }
-                    }),
-              ),
-            ],
-          )
-        ],
-      );
-    });
+                    },
+                  ),
+                ),
+              ],
+            ),
+            SizedBox(
+              height: .35 * MediaQuery.of(context).size.height,
+            ),
+          ],
+        );
+      },
+    );
   }
 }

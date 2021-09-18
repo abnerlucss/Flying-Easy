@@ -1,5 +1,6 @@
 import 'package:app_passagens_aereas/modules/create_account/create_account_stp3.dart';
 import 'package:app_passagens_aereas/modules/create_account/widgets/basic_create_account.dart';
+import 'package:app_passagens_aereas/modules/shared/constants/image_constants.dart';
 import 'package:app_passagens_aereas/modules/shared/widgets/custom_txt_field.dart';
 import 'package:app_passagens_aereas/modules/shared/widgets/spacing_txt_fields.dart';
 import 'package:flutter/material.dart';
@@ -32,6 +33,7 @@ class _CreateAccountStep2PageState extends State<CreateAccountStep2Page> {
   @override
   Widget build(BuildContext context) {
     return BasicCreateAccount(
+        urlImgBackground: ImagesConstants.createAccountBackground2,
         onTap: () {
           widget.createAccountModel.cpf = cpfController.text;
           widget.createAccountModel.email = emailController.text;

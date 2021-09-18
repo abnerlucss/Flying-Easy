@@ -60,6 +60,8 @@ flutter:
     - assets/onboarding_images/adventure.jpg
     - assets/onboarding_images/plane_window.jpg
     - assets/onboarding_images/travel.png
+    - assets/create_account_circles_1.png
+    - assets/create_account_circles_2.png
   #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see

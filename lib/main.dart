@@ -8,6 +8,10 @@ import 'package:responsive_framework/responsive_wrapper.dart';
 import 'modules/onboarding/onboarding_page.dart';
 
 void main() {
+  WidgetsFlutterBinding.ensureInitialized();
+  SystemChrome.setPreferredOrientations(
+      [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]);
+
   SystemChrome.setSystemUIOverlayStyle(
     SystemUiOverlayStyle(
       statusBarColor: Color(0xFF1F2A36),
@@ -42,10 +46,7 @@ class MyApp extends StatelessWidget {
             minWidth: 400,
             defaultScale: true,
             breakpoints: [
-              ResponsiveBreakpoint.resize(480, name: MOBILE),
-              ResponsiveBreakpoint.autoScale(800, name: TABLET),
-              ResponsiveBreakpoint.resize(1000, name: DESKTOP),
-              ResponsiveBreakpoint.autoScale(2460, name: '4K'),
+              ResponsiveBreakpoint.autoScale(400, name: MOBILE),
             ],
           );
         },

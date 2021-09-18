@@ -63,14 +63,5 @@ class _BasicOboardingState extends State<BasicOboarding> {
         )
       ],
     );
-
-    // return Container(
-    //   decoration: BoxDecoration(
-    //     image: DecorationImage(
-    //         image: AssetImage("assets/onboarding_images/plane_window.jpg"),
-    //         fit: BoxFit.cover),
-    //   ),
-    //   child: Text("Teste"),
-    // );
   }
 }
