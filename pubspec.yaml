@@ -37,8 +37,13 @@ dependencies:
   shared_preferences: ^2.0.7
   carousel_slider: ^4.0.0
   flutter_statusbarcolor: ^0.2.3
+  dotted_line: ^3.0.0
+  json_serializable: ^5.0.2
+  equatable: ^2.0.3
+  intl: ^0.17.0
 
 dev_dependencies:
+  build_runner: ^2.1.2
   flutter_test:
     sdk: flutter
 
@@ -62,7 +67,11 @@ flutter:
     - assets/onboarding_images/travel.png
     - assets/create_account_circles_1.png
     - assets/create_account_circles_2.png
-  #   - images/a_dot_ham.jpeg
+    - assets/logo_companies/gol.png
+    - assets/logo_companies/avianca.png
+    - assets/logo_companies/azul.png
+    - assets/logo_companies/map.png
+    - assets/logo_companies/latam.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.

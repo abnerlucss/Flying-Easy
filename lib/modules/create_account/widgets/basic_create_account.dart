@@ -2,10 +2,10 @@ import 'dart:ui';
 
 import 'package:app_passagens_aereas/modules/create_account/create_account_cubit/create_account_cubit.dart';
 import 'package:app_passagens_aereas/modules/onboarding/onboarding_page.dart';
-import 'package:app_passagens_aereas/modules/shared/constants/image_constants.dart';
 import 'package:app_passagens_aereas/modules/shared/util/basic_state_enum.dart';
 import 'package:app_passagens_aereas/modules/shared/widgets/base_view.dart';
 import 'package:app_passagens_aereas/modules/shared/widgets/blue_button.dart';
+import 'package:app_passagens_aereas/modules/shared/widgets/steps_widget.dart';
 import 'package:app_passagens_aereas/modules/shared/widgets/white_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -13,7 +13,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 class BasicCreateAccount extends StatefulWidget {
   const BasicCreateAccount({
     Key? key,
-    required this.titleTextStep,
     required this.textFields,
     required this.blueButtonText,
     required this.whiteButtonText,
@@ -23,9 +22,9 @@ class BasicCreateAccount extends StatefulWidget {
     required this.onTap,
     required this.onTapFailed,
     required this.urlImgBackground,
+    required this.currentStep,
   }) : super(key: key);
 
-  final String titleTextStep;
   final Column textFields;
   final String blueButtonText;
   final String whiteButtonText;
@@ -35,6 +34,7 @@ class BasicCreateAccount extends StatefulWidget {
   final String urlImgBackground;
   final Function() onTap;
   final Function() onTapFailed;
+  final int currentStep;
 
   @override
   _BasicCreateAccountState createState() => _BasicCreateAccountState();
@@ -75,10 +75,14 @@ class _BasicCreateAccountState extends State<BasicCreateAccount> {
           formKey: _formKey,
           widgets: [
             SizedBox(
-              height: .15 * MediaQuery.of(context).size.height,
+              height: .18 * MediaQuery.of(context).size.height,
+            ),
+            StepsWidget(
+              numberOfSteps: 3,
+              currentStep: widget.currentStep,
             ),
             SizedBox(
-              height: .2 * MediaQuery.of(context).size.height,
+              height: .14 * MediaQuery.of(context).size.height,
             ),
             widget.textFields,
             SizedBox(

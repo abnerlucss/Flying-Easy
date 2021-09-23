@@ -33,6 +33,7 @@ class _CreateAccountStep2PageState extends State<CreateAccountStep2Page> {
   @override
   Widget build(BuildContext context) {
     return BasicCreateAccount(
+        currentStep: 2,
         urlImgBackground: ImagesConstants.createAccountBackground2,
         onTap: () {
           widget.createAccountModel.cpf = cpfController.text;
@@ -65,7 +66,6 @@ class _CreateAccountStep2PageState extends State<CreateAccountStep2Page> {
         txtFieldController1: cpfController,
         txtFieldController2: emailController,
         txtFieldController3: phoneController,
-        titleTextStep: "Etapa 2 de 3",
         textFields: Column(
           children: [
             CustomTextField(

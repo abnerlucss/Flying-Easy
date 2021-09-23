@@ -1,16 +1,17 @@
 import 'package:app_passagens_aereas/modules/create_account/create_account_cubit/create_account_cubit.dart';
+import 'package:app_passagens_aereas/modules/home/home_cubit.dart/home_cubit.dart';
+import 'package:app_passagens_aereas/modules/home/page/home_page.dart';
 import 'package:app_passagens_aereas/modules/login/login_cubit/login_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:responsive_framework/responsive_wrapper.dart';
 
-import 'modules/onboarding/onboarding_page.dart';
-
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
   SystemChrome.setPreferredOrientations(
-      [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]);
+    [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown],
+  );
 
   SystemChrome.setSystemUIOverlayStyle(
     SystemUiOverlayStyle(
@@ -34,6 +35,9 @@ class MyApp extends StatelessWidget {
         ),
         BlocProvider(
           create: (context) => LoginCubit(),
+        ),
+        BlocProvider(
+          create: (context) => HomeCubit(),
         )
       ],
       child: MaterialApp(
@@ -55,7 +59,7 @@ class MyApp extends StatelessWidget {
           fontFamily: 'OpenSans',
           primarySwatch: Colors.blue,
         ),
-        home: OnboardingPage(),
+        home: HomePage(),
       ),
     );
   }

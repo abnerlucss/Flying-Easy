@@ -6,11 +6,12 @@ import 'package:app_passagens_aereas/modules/shared/util/basic_state_enum.dart';
 import 'package:app_passagens_aereas/modules/shared/widgets/base_view.dart';
 import 'package:app_passagens_aereas/modules/shared/widgets/custom_txt_field.dart';
 import 'package:app_passagens_aereas/modules/shared/widgets/custom_txt_field_password.dart';
+import 'package:app_passagens_aereas/modules/shared/widgets/white_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 
-import '../onboarding/onboarding_page.dart';
+import '../../onboarding/onboarding_page.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({Key? key}) : super(key: key);
@@ -86,37 +87,15 @@ class _LoginPageState extends State<LoginPage> {
               ],
             ),
             Center(
-              child: ConstrainedBox(
-                constraints: BoxConstraints.tightFor(
-                  width: 166,
-                  height: .05 * MediaQuery.of(context).size.height,
-                ),
-                child: ElevatedButton(
-                  onPressed: () {
-                    if (!_formKey.currentState!.validate()) {
-                      onTapFailed(context);
-                    } else {
-                      onTap(context);
-                    }
-                  },
-                  child: Text(
-                    "Entrar",
-                    style: TextStyle(
-                      fontSize: 18,
-                      color: Color(0XFF000000),
-                      fontWeight: FontWeight.w700,
-                    ),
-                  ),
-                  style: ButtonStyle(
-                    shape: MaterialStateProperty.all(
-                      RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                    ),
-                    backgroundColor:
-                        MaterialStateProperty.all(Color(0XFFF1F1F1)),
-                  ),
-                ),
+              child: WhiteButton(
+                buttonText: "Entrar",
+                onPressed: () {
+                  if (!_formKey.currentState!.validate()) {
+                    onTapFailed(context);
+                  } else {
+                    onTap(context);
+                  }
+                },
               ),
             ),
             SizedBox(
@@ -168,7 +147,7 @@ class _LoginPageState extends State<LoginPage> {
     return Scaffold(
       body: Center(
         child: CircularProgressIndicator(
-          backgroundColor: Color(0xFF4B6584),
+          backgroundColor: Color(0xFF1F2A36),
         ),
       ),
     );

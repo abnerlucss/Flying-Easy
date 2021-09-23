@@ -9,20 +9,31 @@ class WhiteButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ElevatedButton(
-      onPressed: onPressed,
-      child: Text(
-        buttonText,
-        style: TextStyle(fontSize: 18, color: Color(0xFF4B6584)),
+    return ConstrainedBox(
+      constraints: BoxConstraints(
+        maxHeight: 41,
+        minWidth: 160,
       ),
-      style: ButtonStyle(
-        shape: MaterialStateProperty.all(
-          RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(10),
-            side: BorderSide(color: Color(0xFF4B6584), width: 2),
+      child: ElevatedButton(
+        onPressed: onPressed,
+        child: Text(
+          buttonText,
+          style: TextStyle(
+            fontSize: 18,
+            fontWeight: FontWeight.w600,
+            color: Color(0xFF4B6584),
           ),
         ),
-        backgroundColor: MaterialStateProperty.all(Color(0xFFFFFFFF)),
+        style: ButtonStyle(
+          shape: MaterialStateProperty.all(
+            RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(10),
+            ),
+          ),
+          backgroundColor: MaterialStateProperty.all(
+            Color(0xFFFFFFFF),
+          ),
+        ),
       ),
     );
   }

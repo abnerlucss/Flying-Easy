@@ -24,6 +24,7 @@ class _CreateAccountStep3PageState extends State<CreateAccountStep3Page> {
   @override
   Widget build(BuildContext context) {
     return BasicCreateAccount(
+        currentStep: 3,
         urlImgBackground: ImagesConstants.createAccountBackground1,
         onTap: () {
           widget.createAccountModel.password = passwordController.text;
@@ -46,7 +47,6 @@ class _CreateAccountStep3PageState extends State<CreateAccountStep3Page> {
         },
         txtFieldController1: passwordController,
         txtFieldController2: passwordConfirmationController,
-        titleTextStep: "Etapa 3 de 3",
         textFields: Column(
           children: [
             CustomTextFieldPassword(

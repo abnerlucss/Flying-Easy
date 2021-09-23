@@ -8,4 +8,9 @@ class ImagesConstants {
   static const createAccountBackground1 = "assets/create_account_circles_1.png";
   static const createAccountBackground2 = "assets/create_account_circles_2.png";
   static const loginCircles = "assets/login_circles.png";
+  static const logoGol = "assets/logo_companies/gol.png";
+  static const logoAvianca = "assets/logo_companies/avianca.png";
+  static const logoAzul = "assets/logo_companies/azul.png";
+  static const logoMap = "assets/logo_companies/map.png";
+  static const logoLatam = "assets/logo_companies/latam.png";
 }

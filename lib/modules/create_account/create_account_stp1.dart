@@ -26,6 +26,7 @@ class _CreateAccountStep1PageState extends State<CreateAccountStep1Page> {
   @override
   Widget build(BuildContext context) {
     return BasicCreateAccount(
+      currentStep: 1,
       urlImgBackground: ImagesConstants.createAccountBackground1,
       onTap: () {
         createAccountModel.name = nameController.text;
@@ -47,7 +48,6 @@ class _CreateAccountStep1PageState extends State<CreateAccountStep1Page> {
       },
       txtFieldController1: nameController,
       txtFieldController2: dateController,
-      titleTextStep: "Etapa 1 de 3",
       whiteButtonText: "Voltar",
       blueButtonText: "Próximo",
       textFields: Column(

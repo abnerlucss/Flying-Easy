@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
 
-class BlueButton extends StatelessWidget {
-  const BlueButton({Key? key, required this.buttonText, this.onPressed})
-      : super(key: key);
+class GreenButtonWidget extends StatelessWidget {
+  const GreenButtonWidget({
+    Key? key,
+    required this.text,
+    required this.onPressed,
+  }) : super(key: key);
 
-  final String buttonText;
+  final String text;
   final void Function()? onPressed;
 
   @override
@@ -12,16 +15,18 @@ class BlueButton extends StatelessWidget {
     return ElevatedButton(
       onPressed: onPressed,
       child: Text(
-        buttonText,
+        text,
         style: TextStyle(fontSize: 18),
       ),
       style: ButtonStyle(
         shape: MaterialStateProperty.all(
           RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(10.0),
+            borderRadius: BorderRadius.circular(4.0),
           ),
         ),
-        backgroundColor: MaterialStateProperty.all(Color(0xFF4B6584)),
+        backgroundColor: MaterialStateProperty.all(
+          Color(0XFF26C378),
+        ),
       ),
     );
   }
