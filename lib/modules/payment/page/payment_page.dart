@@ -3,8 +3,8 @@ import 'package:app_passagens_aereas/modules/shared/constants/color_constants.da
 import 'package:app_passagens_aereas/modules/shared/widgets/custom_txt_field.dart';
 import 'package:app_passagens_aereas/modules/shared/widgets/pay_button_widget.dart';
 import 'package:app_passagens_aereas/modules/shared/widgets/spacing_txt_fields.dart';
+import 'package:awesome_card/awesome_card.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_credit_card/flutter_credit_card.dart';
 
 class PaymentPage extends StatefulWidget {
   const PaymentPage({
@@ -25,6 +25,8 @@ class _PaymentPageState extends State<PaymentPage> {
   final cardHolderNameController = TextEditingController();
   final cardExpireDateController = TextEditingController();
   final cardCVVController = TextEditingController();
+  bool isShowBackground = false;
+  final cvvFocusNode = FocusNode();
 
   GlobalKey<FormState> _cardFormKey = GlobalKey<FormState>();
 
@@ -41,25 +43,47 @@ class _PaymentPageState extends State<PaymentPage> {
       body: SingleChildScrollView(
         child: Column(
           children: [
-            CreditCardWidget(
-              cardType: CardType.mastercard,
-              textStyle: TextStyle(
-                fontSize: 18,
-                color: Color(0xFFFFFFFF),
-              ),
-              labelExpiredDate: "mm/aa",
-              isHolderNameVisible: true,
-              cardBgColor: Color(0XFF4B6584),
-              cardHolderName: cardHolderNameController.text,
+            SizedBox(
+              height: 10,
+            ),
+            CreditCard(
               cardNumber: cardNumberController.text,
-              cvvCode: cardCVVController.text,
-              expiryDate: cardExpireDateController.text,
-              onCreditCardWidgetChange: (CreditCardBrand) {},
-              showBackView: false,
+              cardExpiry: cardExpireDateController.text,
+              cardHolderName: "Nome impresso no cartão",
+              cvv: cardCVVController.text,
+              bankName: "EasyFlying Card",
+              cardType: CardType
+                  .masterCard, // Optional if you want to override Card Type
+              showBackSide: isShowBackground,
+              frontBackground: Container(
+                decoration: BoxDecoration(
+                  color: Color(0XFF4B6584),
+                ),
+              ),
+              backBackground: Container(
+                decoration: BoxDecoration(
+                  color: Color(0XFF4B6584),
+                ),
+              ),
+              backTextColor: Colors.white,
+              textExpDate: 'Vencimento',
+              textName: 'Name',
+              textExpiry: 'MM/AA',
+            ),
+            SizedBox(
+              height: 20,
             ),
             Form(
               onChanged: () {
-                setState(() {});
+                setState(
+                  () {
+                    if (cvvFocusNode.hasFocus) {
+                      isShowBackground = true;
+                    } else {
+                      isShowBackground = false;
+                    }
+                  },
+                );
               },
               key: _cardFormKey,
               child: Padding(
@@ -75,7 +99,9 @@ class _PaymentPageState extends State<PaymentPage> {
                           return "O número do cartão não pode ser nulo";
                       },
                     ),
-                    SpacingTextFormFields(),
+                    SizedBox(
+                      height: 20,
+                    ),
                     CustomTextField(
                       labelTextField: "Data de Vencimento",
                       textInputType: TextInputType.number,
@@ -85,7 +111,9 @@ class _PaymentPageState extends State<PaymentPage> {
                           return "Preencha a data de vencimento";
                       },
                     ),
-                    SpacingTextFormFields(),
+                    SizedBox(
+                      height: 20,
+                    ),
                     CustomTextField(
                       labelTextField: "Nome impresso",
                       textInputType: TextInputType.name,
@@ -94,8 +122,11 @@ class _PaymentPageState extends State<PaymentPage> {
                         if (text!.isEmpty) return "Preencha o nome";
                       },
                     ),
-                    SpacingTextFormFields(),
+                    SizedBox(
+                      height: 20,
+                    ),
                     CustomTextField(
+                      focusNode: cvvFocusNode,
                       labelTextField: "Código de segurança",
                       textInputType: TextInputType.number,
                       controller: cardCVVController,
@@ -103,7 +134,9 @@ class _PaymentPageState extends State<PaymentPage> {
                         if (text!.isEmpty) return "Preencha o CVV";
                       },
                     ),
-                    SpacingTextFormFields(),
+                    SizedBox(
+                      height: 20,
+                    ),
                     PayButtonWidget(
                       title: "Pagar",
                       ticketModelPrice: 905.30,
@@ -116,7 +149,9 @@ class _PaymentPageState extends State<PaymentPage> {
                         }
                       },
                     ),
-                    SpacingTextFormFields(),
+                    SizedBox(
+                      height: 20,
+                    ),
                   ],
                 ),
               ),

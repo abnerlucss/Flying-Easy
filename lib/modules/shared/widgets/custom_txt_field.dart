@@ -10,7 +10,8 @@ class CustomTextField extends StatelessWidget {
       this.validator,
       this.formatter,
       this.hintText,
-      required this.controller})
+      required this.controller,
+      this.focusNode})
       : super(key: key);
 
   final String labelTextField;
@@ -19,6 +20,7 @@ class CustomTextField extends StatelessWidget {
   final MaskTextInputFormatter? formatter;
   final String? hintText;
   final TextEditingController controller;
+  final FocusNode? focusNode;
 
   @override
   Widget build(BuildContext context) {
@@ -42,6 +44,7 @@ class CustomTextField extends StatelessWidget {
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 15),
               child: TextFormField(
+                focusNode: focusNode,
                 controller: controller,
                 inputFormatters: formatter == null ? null : [formatter!],
                 autovalidateMode: AutovalidateMode.disabled,
