@@ -26,9 +26,6 @@ class _BaseViewState extends State<BaseView> {
 
   @override
   Widget build(BuildContext context) {
-    final viewInsets = EdgeInsets.fromWindowPadding(
-        window.viewInsets, window.devicePixelRatio);
-
     return Scaffold(
       resizeToAvoidBottomInset: false,
       body: LayoutBuilder(

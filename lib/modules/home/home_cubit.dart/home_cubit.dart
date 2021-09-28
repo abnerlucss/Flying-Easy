@@ -5,17 +5,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 class HomeCubit extends Cubit<HomeState> {
   HomeCubit() : super(HomeState.init());
 
-  getAllTickets() async {
-    emit(HomeState.load());
-    final List data = await TicketsService().getAllTickets() ?? [];
-
-    if (data.length != 0) {
-      emit(HomeState.success(data));
-    } else {
-      emit(HomeState.failed());
-    }
-  }
-
   getAllFlights() async {
     emit(HomeState.load());
     final List data = await TicketsService().getAllFlights() ?? [];

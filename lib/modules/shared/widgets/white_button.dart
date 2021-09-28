@@ -11,7 +11,7 @@ class WhiteButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return ConstrainedBox(
       constraints: BoxConstraints(
-        maxHeight: 41,
+        maxHeight: 40,
         minWidth: 160,
       ),
       child: ElevatedButton(

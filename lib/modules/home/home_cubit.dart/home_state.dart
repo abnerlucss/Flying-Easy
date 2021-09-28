@@ -17,8 +17,8 @@ class HomeState extends Equatable {
 
   const HomeState.failed() : this._(state: BasicStateEnum.failed);
 
-  const HomeState.success(allTickets)
-      : this._(state: BasicStateEnum.success, flights: allTickets);
+  const HomeState.success(flights)
+      : this._(state: BasicStateEnum.success, flights: flights);
 
   @override
   List<Object?> get props => [state, flights];

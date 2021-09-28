@@ -1,4 +1,6 @@
 import 'package:app_passagens_aereas/modules/create_account/create_account_cubit/create_account_cubit.dart';
+import 'package:app_passagens_aereas/modules/flight_details/flight_details_cubit/flight_details_cubit.dart';
+import 'package:app_passagens_aereas/modules/flight_details/page/flight_details_page.dart';
 import 'package:app_passagens_aereas/modules/home/home_cubit.dart/home_cubit.dart';
 import 'package:app_passagens_aereas/modules/home/page/home_page.dart';
 import 'package:app_passagens_aereas/modules/login/login_cubit/login_cubit.dart';
@@ -38,9 +40,13 @@ class MyApp extends StatelessWidget {
         ),
         BlocProvider(
           create: (context) => HomeCubit(),
+        ),
+        BlocProvider(
+          create: (context) => FlightDetailsCubit(),
         )
       ],
       child: MaterialApp(
+        debugShowCheckedModeBanner: false,
         builder: (context, widget) {
           print(MediaQuery.of(context).size.width);
 

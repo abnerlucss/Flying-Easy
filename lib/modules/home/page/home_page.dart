@@ -32,7 +32,7 @@ class _HomePageState extends State<HomePage> {
           return load();
         }
 
-        final list = state.flights.toSet().toList();
+        final list = state.flights;
         return Scaffold(
           backgroundColor: Color(0XFFFFFFFF),
           appBar: AppBar(

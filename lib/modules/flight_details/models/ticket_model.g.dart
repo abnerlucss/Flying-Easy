@@ -15,6 +15,7 @@ TicketModel _$TicketModelFromJson(Map<String, dynamic> json) => TicketModel(
       dataHoraDesembarque:
           DateTime.parse(json['dataHoraDesembarque'] as String),
       numeroAssento: json['numeroAssento'] as int,
+      idPassageiro: json['idPassageiro'] as int?,
       nomeClasse: json['nomeClasse'] as String,
       nomeCompanhia: json['nomeCompanhia'] as String,
       preco: (json['preco'] as num).toDouble(),
@@ -30,6 +31,7 @@ Map<String, dynamic> _$TicketModelToJson(TicketModel instance) =>
       'dataHoraEmbarque': instance.dataHoraEmbarque.toIso8601String(),
       'dataHoraDesembarque': instance.dataHoraDesembarque.toIso8601String(),
       'numeroAssento': instance.numeroAssento,
+      'idPassageiro': instance.idPassageiro,
       'nomeClasse': instance.nomeClasse,
       'nomeCompanhia': instance.nomeCompanhia,
       'preco': instance.preco,

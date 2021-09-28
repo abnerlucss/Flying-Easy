@@ -1,5 +1,5 @@
+import 'package:app_passagens_aereas/modules/flight_details/page/flight_details_page.dart';
 import 'package:app_passagens_aereas/modules/home/models/flight_model.dart';
-import 'package:app_passagens_aereas/modules/home/service/tickets_service.dart';
 import 'package:app_passagens_aereas/modules/home/widget/green_button_widget.dart';
 import 'package:app_passagens_aereas/modules/shared/constants/image_constants.dart';
 import 'package:dotted_line/dotted_line.dart';
@@ -119,7 +119,12 @@ class TicketCardWidget extends StatelessWidget {
                     GreenButtonWidget(
                       text: "Detalhes",
                       onPressed: () {
-                        final flag = TicketsService().getAllTickets();
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => FlightDetailsPage(
+                                      idVoo: flightModel.idVoo,
+                                    )));
                       },
                     ),
                     SizedBox(
@@ -146,26 +151,26 @@ class TicketCardWidget extends StatelessWidget {
       },
     );
   }
-}
 
-String checkCompanyLogo(String companyIdentifier) {
-  switch (companyIdentifier) {
-    case "GLO001":
-      return ImagesConstants.logoGol;
+  static String checkCompanyLogo(String companyIdentifier) {
+    switch (companyIdentifier) {
+      case "GLO001":
+        return ImagesConstants.logoGol;
 
-    case "AZU002":
-      return ImagesConstants.logoAzul;
+      case "AZU002":
+        return ImagesConstants.logoAzul;
 
-    case "AVA003":
-      return ImagesConstants.logoAvianca;
+      case "AVA003":
+        return ImagesConstants.logoAvianca;
 
-    case "TAM004":
-      return ImagesConstants.logoLatam;
+      case "TAM004":
+        return ImagesConstants.logoLatam;
 
-    case "PAM005":
-      return ImagesConstants.logoMap;
+      case "PAM005":
+        return ImagesConstants.logoMap;
 
-    default:
-      return "";
+      default:
+        return "";
+    }
   }
 }
