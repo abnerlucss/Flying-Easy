@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 
 class CustomTextFieldPassword extends StatefulWidget {
-  const CustomTextFieldPassword(
-      {Key? key,
-      required this.labelTextField,
-      this.validator,
-      required this.controller})
-      : super(key: key);
+  const CustomTextFieldPassword({
+    Key? key,
+    required this.labelTextField,
+    this.validator,
+    required this.controller,
+  }) : super(key: key);
 
   final String labelTextField;
   final String? Function(String?)? validator;

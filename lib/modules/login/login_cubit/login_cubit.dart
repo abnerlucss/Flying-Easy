@@ -1,20 +1,19 @@
+import 'package:app_passagens_aereas/modules/login/login_cubit/login_state.dart';
 import 'package:app_passagens_aereas/modules/login/models/login_model.dart';
 import 'package:app_passagens_aereas/modules/login/service/login_service.dart';
-import 'package:app_passagens_aereas/modules/shared/util/basic_state_enum.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-class LoginCubit extends Cubit<BasicStateEnum> {
-  LoginCubit() : super(BasicStateEnum.init);
+class LoginCubit extends Cubit<LoginState> {
+  LoginCubit() : super(LoginState.init());
 
   postLogin(LoginModel loginModel) async {
-    emit(BasicStateEnum.load);
+    emit(LoginState.load());
     final data = await LoginService().postLogin(loginModel);
 
-    print(data is int);
     if (data is int) {
-      emit(BasicStateEnum.success);
+      emit(LoginState.success(data));
     } else {
-      emit(BasicStateEnum.failed);
+      emit(LoginState.failed());
     }
   }
 }

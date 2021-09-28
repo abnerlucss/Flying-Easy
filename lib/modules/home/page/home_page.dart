@@ -8,7 +8,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class HomePage extends StatefulWidget {
-  const HomePage({Key? key}) : super(key: key);
+  const HomePage({Key? key, required this.idPassenger}) : super(key: key);
+
+  final int idPassenger;
 
   @override
   _HomePageState createState() => _HomePageState();
@@ -18,6 +20,8 @@ class _HomePageState extends State<HomePage> {
   @override
   void initState() {
     super.initState();
+    print(widget.idPassenger);
+
     BlocProvider.of<HomeCubit>(context).getAllFlights();
   }
 
@@ -53,6 +57,7 @@ class _HomePageState extends State<HomePage> {
               final flight = list[index];
               return Center(
                 child: TicketCardWidget(
+                  idPassenger: widget.idPassenger,
                   flightModel: flight,
                 ),
               );

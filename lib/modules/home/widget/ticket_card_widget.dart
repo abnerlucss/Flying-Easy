@@ -10,9 +10,11 @@ class TicketCardWidget extends StatelessWidget {
   const TicketCardWidget({
     Key? key,
     required this.flightModel,
+    required this.idPassenger,
   }) : super(key: key);
 
   final FlightModel flightModel;
+  final int idPassenger;
 
   @override
   Widget build(BuildContext context) {
@@ -124,6 +126,7 @@ class TicketCardWidget extends StatelessWidget {
                             MaterialPageRoute(
                                 builder: (context) => FlightDetailsPage(
                                       idVoo: flightModel.idVoo,
+                                      idPassenger: idPassenger,
                                     )));
                       },
                     ),

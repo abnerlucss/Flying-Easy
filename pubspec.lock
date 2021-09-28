@@ -244,6 +244,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "7.2.0"
+  flutter_credit_card:
+    dependency: "direct main"
+    description:
+      name: flutter_credit_card
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "3.0.0"
   flutter_statusbarcolor:
     dependency: "direct main"
     description:

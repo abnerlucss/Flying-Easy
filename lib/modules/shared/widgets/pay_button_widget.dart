@@ -6,32 +6,33 @@ class PayButtonWidget extends StatefulWidget {
     Key? key,
     required this.title,
     required this.onpress,
-    required this.seatClass,
-    required this.flightModel,
+    this.seatClass,
+    this.flightModel,
+    this.ticketModelPrice,
   }) : super(key: key);
 
   final String title;
   final Function() onpress;
-  final String seatClass;
-  final FlightModel flightModel;
-
+  final String? seatClass;
+  final FlightModel? flightModel;
+  final double? ticketModelPrice;
   @override
   _PayButtonWidgetState createState() => _PayButtonWidgetState();
 }
 
 class _PayButtonWidgetState extends State<PayButtonWidget> {
-  double setPrice(String? titleClass) {
-    double price;
+  double? setPrice(String? titleClass) {
+    double? price;
     switch (titleClass) {
       case "Econômica":
-        price = widget.flightModel.precoEconomica;
+        price = widget.flightModel?.precoEconomica;
         break;
 
       case "Executiva":
-        price = widget.flightModel.precoExecutiva;
+        price = widget.flightModel?.precoExecutiva;
         break;
       default:
-        price = widget.flightModel.precoPrimeiraClasse;
+        price = widget.flightModel?.precoPrimeiraClasse;
     }
 
     return price;
@@ -59,7 +60,7 @@ class _PayButtonWidgetState extends State<PayButtonWidget> {
         child: Column(
           children: [
             Text(
-              "R\$ ${setPrice(widget.seatClass)}",
+              "R\$ ${widget.ticketModelPrice == null ? setPrice(widget.seatClass) : widget.ticketModelPrice}",
               style: TextStyle(
                 fontSize: 19,
                 color: Color(

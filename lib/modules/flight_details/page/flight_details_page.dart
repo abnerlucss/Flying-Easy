@@ -5,6 +5,7 @@ import 'package:app_passagens_aereas/modules/flight_details/view/modal_flight_cl
 import 'package:app_passagens_aereas/modules/flight_details/view/modal_flight_seats_view.dart';
 import 'package:app_passagens_aereas/modules/flight_details/widget/details_button_widget.dart';
 import 'package:app_passagens_aereas/modules/home/widget/ticket_card_widget.dart';
+import 'package:app_passagens_aereas/modules/payment/page/payment_page.dart';
 import 'package:app_passagens_aereas/modules/shared/constants/color_constants.dart';
 import 'package:app_passagens_aereas/modules/shared/constants/image_constants.dart';
 import 'package:app_passagens_aereas/modules/shared/util/basic_state_enum.dart';
@@ -14,9 +15,14 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
 
 class FlightDetailsPage extends StatefulWidget {
-  const FlightDetailsPage({Key? key, required this.idVoo}) : super(key: key);
+  const FlightDetailsPage({
+    Key? key,
+    required this.idVoo,
+    required this.idPassenger,
+  }) : super(key: key);
 
   final int idVoo;
+  final int idPassenger;
 
   @override
   _FlightDetailsPageState createState() => _FlightDetailsPageState();
@@ -238,7 +244,25 @@ class _FlightDetailsPageState extends State<FlightDetailsPage> {
                     child: PayButtonWidget(
                       flightModel: flight,
                       title: "Comprar",
-                      onpress: () {},
+                      onpress: () {
+                        if (ticket == null) {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            const SnackBar(
+                              content: Text('Selecione o número do assento'),
+                            ),
+                          );
+                        } else {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => PaymentPage(
+                                idPassenger: widget.idPassenger,
+                                ticketModel: ticket!,
+                              ),
+                            ),
+                          );
+                        }
+                      },
                       seatClass: titleClass,
                     ),
                   ),

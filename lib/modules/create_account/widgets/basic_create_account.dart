@@ -1,6 +1,8 @@
 import 'dart:ui';
 
 import 'package:app_passagens_aereas/modules/create_account/create_account_cubit/create_account_cubit.dart';
+import 'package:app_passagens_aereas/modules/home/page/home_page.dart';
+import 'package:app_passagens_aereas/modules/login/login_cubit/login_state.dart';
 import 'package:app_passagens_aereas/modules/onboarding/onboarding_page.dart';
 import 'package:app_passagens_aereas/modules/shared/util/basic_state_enum.dart';
 import 'package:app_passagens_aereas/modules/shared/widgets/base_view.dart';
@@ -45,24 +47,20 @@ class _BasicCreateAccountState extends State<BasicCreateAccount> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocConsumer<CreateAccountCubit, BasicStateEnum>(
+    return BlocConsumer<CreateAccountCubit, LoginState>(
       listener: (context, state) {
-        if (state == BasicStateEnum.success) {
-          Navigator.push(context,
-              MaterialPageRoute(builder: (context) => OnboardingPage()));
+        if (state.state == BasicStateEnum.success) {
+          Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(
+                  builder: (context) => HomePage(
+                        idPassenger: state.idPassenger!,
+                      )));
         }
       },
       builder: (context, state) {
-        if (state == BasicStateEnum.load) {
-          return BaseView(
-            widgets: [
-              Center(
-                child: CircularProgressIndicator(
-                  backgroundColor: Color(0xFF4B6584),
-                ),
-              )
-            ],
-          );
+        if (state.state == BasicStateEnum.load) {
+          load();
         }
         return BaseView(
           background: Positioned.fill(
@@ -126,4 +124,14 @@ class _BasicCreateAccountState extends State<BasicCreateAccount> {
       },
     );
   }
+}
+
+Scaffold load() {
+  return Scaffold(
+    body: Center(
+      child: CircularProgressIndicator(
+        backgroundColor: Color(0xFF1F2A36),
+      ),
+    ),
+  );
 }

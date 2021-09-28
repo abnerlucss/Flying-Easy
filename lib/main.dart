@@ -1,9 +1,9 @@
 import 'package:app_passagens_aereas/modules/create_account/create_account_cubit/create_account_cubit.dart';
 import 'package:app_passagens_aereas/modules/flight_details/flight_details_cubit/flight_details_cubit.dart';
-import 'package:app_passagens_aereas/modules/flight_details/page/flight_details_page.dart';
 import 'package:app_passagens_aereas/modules/home/home_cubit.dart/home_cubit.dart';
-import 'package:app_passagens_aereas/modules/home/page/home_page.dart';
 import 'package:app_passagens_aereas/modules/login/login_cubit/login_cubit.dart';
+import 'package:app_passagens_aereas/modules/onboarding/onboarding_page.dart';
+import 'package:app_passagens_aereas/modules/payment/page/payment_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -65,7 +65,10 @@ class MyApp extends StatelessWidget {
           fontFamily: 'OpenSans',
           primarySwatch: Colors.blue,
         ),
-        home: HomePage(),
+        home: PaymentPage(
+          idPassenger: 1,
+          ticketModel: null,
+        ),
       ),
     );
   }

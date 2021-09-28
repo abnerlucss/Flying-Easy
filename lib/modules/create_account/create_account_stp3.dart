@@ -28,7 +28,6 @@ class _CreateAccountStep3PageState extends State<CreateAccountStep3Page> {
         urlImgBackground: ImagesConstants.createAccountBackground1,
         onTap: () {
           widget.createAccountModel.password = passwordController.text;
-          // CreateAccountService().postHttp(widget.createAccountModel);
           BlocProvider.of<CreateAccountCubit>(context)
               .postCreateAccount(widget.createAccountModel);
         },

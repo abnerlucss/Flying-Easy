@@ -1,5 +1,7 @@
 import 'package:app_passagens_aereas/modules/create_account/create_account_stp1.dart';
+import 'package:app_passagens_aereas/modules/home/page/home_page.dart';
 import 'package:app_passagens_aereas/modules/login/login_cubit/login_cubit.dart';
+import 'package:app_passagens_aereas/modules/login/login_cubit/login_state.dart';
 import 'package:app_passagens_aereas/modules/login/models/login_model.dart';
 import 'package:app_passagens_aereas/modules/shared/constants/image_constants.dart';
 import 'package:app_passagens_aereas/modules/shared/util/basic_state_enum.dart';
@@ -35,12 +37,12 @@ class _LoginPageState extends State<LoginPage> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocConsumer<LoginCubit, BasicStateEnum>(
+    return BlocConsumer<LoginCubit, LoginState>(
       listener: (context, state) {
         checkState(state, context);
       },
       builder: (context, state) {
-        if (state == BasicStateEnum.load) {
+        if (state == LoginState.load()) {
           return load();
         }
         return BaseView(
@@ -67,10 +69,11 @@ class _LoginPageState extends State<LoginPage> {
             Column(
               children: [
                 CustomTextField(
-                    formatter: maskCpf,
-                    labelTextField: "CPF",
-                    textInputType: TextInputType.number,
-                    controller: loginController),
+                  formatter: maskCpf,
+                  labelTextField: "CPF",
+                  textInputType: TextInputType.number,
+                  controller: loginController,
+                ),
                 SizedBox(
                   height: .05 * MediaQuery.of(context).size.height,
                 ),
@@ -153,11 +156,15 @@ class _LoginPageState extends State<LoginPage> {
     );
   }
 
-  void checkState(BasicStateEnum state, BuildContext context) {
-    if (state == BasicStateEnum.success) {
-      Navigator.push(
-          context, MaterialPageRoute(builder: (context) => OnboardingPage()));
-    } else if (state == BasicStateEnum.failed) {
+  void checkState(LoginState state, BuildContext context) {
+    if (state.state == BasicStateEnum.success) {
+      Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(
+              builder: (context) => HomePage(
+                    idPassenger: state.idPassenger!,
+                  )));
+    } else if (state.state == BasicStateEnum.failed) {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(content: Text('Login e/ou senha inválidos')),
       );

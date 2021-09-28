@@ -35,7 +35,8 @@ class _BasicOboardingState extends State<BasicOboarding> {
             alignment: Alignment.topRight,
             child: Padding(
               padding: const EdgeInsets.all(8.0),
-              child: TextButton(
+              child: CloseButton(
+                color: Color(0xFFFFFFFF),
                 onPressed: () {
                   Navigator.pushReplacement(
                     context,
@@ -44,13 +45,6 @@ class _BasicOboardingState extends State<BasicOboarding> {
                     ),
                   );
                 },
-                child: Text(
-                  "X",
-                  style: TextStyle(
-                    color: Color(0XFFFFFFFF),
-                    fontSize: 25,
-                  ),
-                ),
               ),
             ),
           ),
