@@ -21,7 +21,9 @@ class BlueButton extends StatelessWidget {
             borderRadius: BorderRadius.circular(10.0),
           ),
         ),
-        backgroundColor: MaterialStateProperty.all(Color(0xFF4B6584)),
+        backgroundColor: MaterialStateProperty.all(
+          Color(0xFF4B6584),
+        ),
       ),
     );
   }

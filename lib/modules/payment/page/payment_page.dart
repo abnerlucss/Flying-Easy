@@ -1,10 +1,16 @@
 import 'package:app_passagens_aereas/modules/flight_details/models/ticket_model.dart';
+import 'package:app_passagens_aereas/modules/onboarding/onboarding_page.dart';
+import 'package:app_passagens_aereas/modules/payment/cubit/payment_cubit.dart';
+import 'package:app_passagens_aereas/modules/payment/cubit/payment_state.dart';
+import 'package:app_passagens_aereas/modules/payment/model/payment_model.dart';
+import 'package:app_passagens_aereas/modules/payment/page/payment_success.dart';
 import 'package:app_passagens_aereas/modules/shared/constants/color_constants.dart';
+import 'package:app_passagens_aereas/modules/shared/util/basic_state_enum.dart';
 import 'package:app_passagens_aereas/modules/shared/widgets/custom_txt_field.dart';
 import 'package:app_passagens_aereas/modules/shared/widgets/pay_button_widget.dart';
-import 'package:app_passagens_aereas/modules/shared/widgets/spacing_txt_fields.dart';
 import 'package:awesome_card/awesome_card.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class PaymentPage extends StatefulWidget {
   const PaymentPage({
@@ -31,145 +37,160 @@ class _PaymentPageState extends State<PaymentPage> {
   GlobalKey<FormState> _cardFormKey = GlobalKey<FormState>();
 
   @override
+  void initState() {
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        centerTitle: true,
-        title: Text(
-          "Pagamento",
-        ),
-        backgroundColor: Color(ColorConstants.darkPrimaryBlue),
-      ),
-      body: SingleChildScrollView(
-        child: Column(
-          children: [
-            SizedBox(
-              height: 10,
+    return BlocConsumer<PaymentCubit, PaymentState>(
+      listener: (context, state) {
+        checkState(state, context);
+      },
+      builder: (context, state) {
+        if (state == PaymentState.load()) {
+          return load();
+        }
+        return Scaffold(
+          appBar: AppBar(
+            centerTitle: true,
+            title: Text(
+              "Pagamento",
             ),
-            CreditCard(
-              cardNumber: cardNumberController.text,
-              cardExpiry: cardExpireDateController.text,
-              cardHolderName: "Nome impresso no cartão",
-              cvv: cardCVVController.text,
-              bankName: "EasyFlying Card",
-              cardType: CardType
-                  .masterCard, // Optional if you want to override Card Type
-              showBackSide: isShowBackground,
-              frontBackground: Container(
-                decoration: BoxDecoration(
-                  color: Color(0XFF4B6584),
+            backgroundColor: Color(ColorConstants.darkPrimaryBlue),
+          ),
+          body: SingleChildScrollView(
+            child: Column(
+              children: [
+                SizedBox(
+                  height: 10,
                 ),
-              ),
-              backBackground: Container(
-                decoration: BoxDecoration(
-                  color: Color(0XFF4B6584),
+                CreditCard(
+                  cardNumber: cardNumberController.text,
+                  cardExpiry: cardExpireDateController.text,
+                  cardHolderName: "Nome impresso no cartão",
+                  cvv: cardCVVController.text,
+                  bankName: "EasyFlying Card",
+                  cardType: CardType
+                      .masterCard, // Optional if you want to override Card Type
+                  showBackSide: isShowBackground,
+                  frontBackground: Container(
+                    decoration: BoxDecoration(
+                      color: Color(0XFF4B6584),
+                    ),
+                  ),
+                  backBackground: Container(
+                    decoration: BoxDecoration(
+                      color: Color(0XFF4B6584),
+                    ),
+                  ),
+                  backTextColor: Colors.white,
+                  textExpDate: 'Vencimento',
+                  textName: 'Name',
+                  textExpiry: 'MM/AA',
                 ),
-              ),
-              backTextColor: Colors.white,
-              textExpDate: 'Vencimento',
-              textName: 'Name',
-              textExpiry: 'MM/AA',
-            ),
-            SizedBox(
-              height: 20,
-            ),
-            Form(
-              onChanged: () {
-                setState(
-                  () {
-                    if (cvvFocusNode.hasFocus) {
-                      isShowBackground = true;
-                    } else {
-                      isShowBackground = false;
-                    }
-                  },
-                );
-              },
-              key: _cardFormKey,
-              child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 20),
-                child: Column(
-                  children: [
-                    CustomTextField(
-                      labelTextField: "Número do cartão",
-                      textInputType: TextInputType.number,
-                      controller: cardNumberController,
-                      validator: (text) {
-                        if (text!.isEmpty)
-                          return "O número do cartão não pode ser nulo";
-                      },
-                    ),
-                    SizedBox(
-                      height: 20,
-                    ),
-                    CustomTextField(
-                      labelTextField: "Data de Vencimento",
-                      textInputType: TextInputType.number,
-                      controller: cardExpireDateController,
-                      validator: (text) {
-                        if (text!.isEmpty)
-                          return "Preencha a data de vencimento";
-                      },
-                    ),
-                    SizedBox(
-                      height: 20,
-                    ),
-                    CustomTextField(
-                      labelTextField: "Nome impresso",
-                      textInputType: TextInputType.name,
-                      controller: cardHolderNameController,
-                      validator: (text) {
-                        if (text!.isEmpty) return "Preencha o nome";
-                      },
-                    ),
-                    SizedBox(
-                      height: 20,
-                    ),
-                    CustomTextField(
-                      focusNode: cvvFocusNode,
-                      labelTextField: "Código de segurança",
-                      textInputType: TextInputType.number,
-                      controller: cardCVVController,
-                      validator: (text) {
-                        if (text!.isEmpty) return "Preencha o CVV";
-                      },
-                    ),
-                    SizedBox(
-                      height: 20,
-                    ),
-                    PayButtonWidget(
-                      title: "Pagar",
-                      ticketModelPrice: 905.30,
-                      onpress: () {
-                        if (!_cardFormKey.currentState!.validate()) {
-                          onTapFailed(context);
+                SizedBox(
+                  height: 20,
+                ),
+                Form(
+                  onChanged: () {
+                    setState(
+                      () {
+                        if (cvvFocusNode.hasFocus) {
+                          isShowBackground = true;
                         } else {
-                          // onTap(context);
-                          print("Batatinha");
+                          isShowBackground = false;
                         }
                       },
+                    );
+                  },
+                  key: _cardFormKey,
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 20),
+                    child: Column(
+                      children: [
+                        CustomTextField(
+                          labelTextField: "Número do cartão",
+                          textInputType: TextInputType.number,
+                          controller: cardNumberController,
+                          validator: (text) {
+                            if (text!.isEmpty)
+                              return "O número do cartão não pode ser nulo";
+                          },
+                        ),
+                        SizedBox(
+                          height: 20,
+                        ),
+                        CustomTextField(
+                          labelTextField: "Data de Vencimento",
+                          textInputType: TextInputType.number,
+                          controller: cardExpireDateController,
+                          validator: (text) {
+                            if (text!.isEmpty)
+                              return "Preencha a data de vencimento";
+                          },
+                        ),
+                        SizedBox(
+                          height: 20,
+                        ),
+                        CustomTextField(
+                          labelTextField: "Nome impresso",
+                          textInputType: TextInputType.name,
+                          controller: cardHolderNameController,
+                          validator: (text) {
+                            if (text!.isEmpty) return "Preencha o nome";
+                          },
+                        ),
+                        SizedBox(
+                          height: 20,
+                        ),
+                        CustomTextField(
+                          focusNode: cvvFocusNode,
+                          labelTextField: "Código de segurança",
+                          textInputType: TextInputType.number,
+                          controller: cardCVVController,
+                          validator: (text) {
+                            if (text!.isEmpty) return "Preencha o CVV";
+                          },
+                        ),
+                        SizedBox(
+                          height: 20,
+                        ),
+                        PayButtonWidget(
+                          title: "Pagar",
+                          ticketModelPrice: widget.ticketModel!.preco,
+                          onpress: () {
+                            if (!_cardFormKey.currentState!.validate()) {
+                              onTapFailed(context);
+                            } else {
+                              onTap(context);
+                            }
+                          },
+                        ),
+                        SizedBox(
+                          height: 20,
+                        ),
+                      ],
                     ),
-                    SizedBox(
-                      height: 20,
-                    ),
-                  ],
-                ),
-              ),
-            )
-          ],
-        ),
-      ),
+                  ),
+                )
+              ],
+            ),
+          ),
+        );
+      },
     );
   }
 
-  // void onTap(BuildContext context) {
-  //   loginModel.cpf = loginController.text;
-  //   loginModel.senha = passwordController.text;
+  void onTap(BuildContext context) {
+    PaymentModel paymentModel = PaymentModel(
+        idPassenger: widget.idPassenger,
+        idTicket: widget.ticketModel!.idPassagem);
 
-  //   print(loginModel);
+    print(paymentModel.toJson());
 
-  //   BlocProvider.of<LoginCubit>(context).postLogin(loginModel);
-  // }
+    BlocProvider.of<PaymentCubit>(context).postPaymentTicket(paymentModel);
+  }
 
   void onTapFailed(BuildContext context) {
     ScaffoldMessenger.of(context).showSnackBar(
@@ -177,5 +198,32 @@ class _PaymentPageState extends State<PaymentPage> {
         content: Text('Preencha todos os campos'),
       ),
     );
+  }
+
+  Scaffold load() {
+    return Scaffold(
+      body: Center(
+        child: CircularProgressIndicator(
+          backgroundColor: Color(0xFF1F2A36),
+        ),
+      ),
+    );
+  }
+
+  void checkState(PaymentState state, BuildContext context) {
+    if (state.state == BasicStateEnum.success) {
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(
+          builder: (context) => PaymentSuccessPage(),
+        ),
+      );
+    } else if (state.state == BasicStateEnum.failed) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('Erro de pagamento'),
+        ),
+      );
+    }
   }
 }

@@ -36,6 +36,7 @@ class TicketModel extends Equatable {
   final String nomeCompanhia;
   final double preco;
   final int idVoo;
+  @JsonKey(ignore: true)
   Color squareColor;
 
   @override

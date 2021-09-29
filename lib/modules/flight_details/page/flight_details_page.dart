@@ -285,6 +285,7 @@ class _FlightDetailsPageState extends State<FlightDetailsPage> {
             setState(
               () {
                 titleClass = value!;
+                ticket = null;
                 BlocProvider.of<FlightDetailsCubit>(context)
                     .getTicketsByIdAndClass(widget.idVoo, titleClass);
               },

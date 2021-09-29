@@ -51,11 +51,13 @@ class _BasicCreateAccountState extends State<BasicCreateAccount> {
       listener: (context, state) {
         if (state.state == BasicStateEnum.success) {
           Navigator.pushReplacement(
-              context,
-              MaterialPageRoute(
-                  builder: (context) => HomePage(
-                        idPassenger: state.idPassenger!,
-                      )));
+            context,
+            MaterialPageRoute(
+              builder: (context) => HomePage(
+                idPassenger: state.idPassenger!,
+              ),
+            ),
+          );
         }
       },
       builder: (context, state) {

@@ -3,16 +3,16 @@ import 'package:flutter/services.dart';
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 
 class CustomTextField extends StatelessWidget {
-  const CustomTextField(
-      {Key? key,
-      required this.labelTextField,
-      required this.textInputType,
-      this.validator,
-      this.formatter,
-      this.hintText,
-      required this.controller,
-      this.focusNode})
-      : super(key: key);
+  const CustomTextField({
+    Key? key,
+    required this.labelTextField,
+    required this.textInputType,
+    this.validator,
+    this.formatter,
+    this.hintText,
+    required this.controller,
+    this.focusNode,
+  }) : super(key: key);
 
   final String labelTextField;
   final TextInputType textInputType;
