@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:app_passagens_aereas/modules/flight_details/flight_details_cubit/flight_details_cubit.dart';
 import 'package:app_passagens_aereas/modules/flight_details/flight_details_cubit/flight_details_state.dart';
 import 'package:app_passagens_aereas/modules/flight_details/models/ticket_model.dart';
@@ -19,10 +21,12 @@ class FlightDetailsPage extends StatefulWidget {
     Key? key,
     required this.idVoo,
     required this.idPassenger,
+    required this.destiny,
   }) : super(key: key);
 
   final int idVoo;
   final int idPassenger;
+  final String destiny;
 
   @override
   _FlightDetailsPageState createState() => _FlightDetailsPageState();
@@ -37,9 +41,8 @@ class _FlightDetailsPageState extends State<FlightDetailsPage> {
   @override
   void initState() {
     super.initState();
-    BlocProvider.of<FlightDetailsCubit>(context).getFlightById(widget.idVoo);
     BlocProvider.of<FlightDetailsCubit>(context)
-        .getTicketsByIdAndClass(widget.idVoo, titleClass);
+        .getDataDetails(widget.idVoo, titleClass, widget.destiny);
   }
 
   @override
@@ -57,7 +60,11 @@ class _FlightDetailsPageState extends State<FlightDetailsPage> {
 
         final flight = state.flight;
         ticketList = state.ticketList;
-        print(ticketList);
+        final image = state.imageModel;
+        var rdn = Random();
+
+        final String imageURL =
+            image!.hits[rdn.nextInt(image.hits.length)]["webformatURL"];
 
         price = flight!.precoEconomica;
         return Scaffold(
@@ -76,8 +83,8 @@ class _FlightDetailsPageState extends State<FlightDetailsPage> {
                   children: [
                     Stack(
                       children: [
-                        Image.asset(
-                          ImagesConstants.detailsBackground,
+                        Image.network(
+                          imageURL,
                           height: .38 * constraints.maxHeight,
                           width: constraints.maxWidth,
                           fit: BoxFit.cover,

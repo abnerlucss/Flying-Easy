@@ -62,10 +62,11 @@ class _SplashPageState extends State<SplashPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        body: Align(
-      child: Image.asset(
-        ImagesConstants.homeLogo,
+      body: Align(
+        child: Image.asset(
+          ImagesConstants.homeLogo,
+        ),
       ),
-    ));
+    );
   }
 }

@@ -1,3 +1,4 @@
+import 'package:app_passagens_aereas/modules/flight_details/models/image_model.dart';
 import 'package:app_passagens_aereas/modules/flight_details/models/ticket_model.dart';
 import 'package:app_passagens_aereas/modules/home/models/flight_model.dart';
 import 'package:dio/dio.dart';
@@ -31,6 +32,18 @@ class FlightDetailsService {
 
       print(data);
       return data;
+    } catch (e) {
+      print(e);
+    }
+  }
+
+  Future<ImageModel?> getLandscapeImageByFlightDestiny(String destiny) async {
+    print(destiny);
+    try {
+      var response = await Dio().get(
+        'https://pixabay.com/api/?key=9803199-70f93c0ac42849ae86acfffcd&q=$destiny&image_type=photo&category=travel&orientation=horizontal&order=popular',
+      );
+      return ImageModel.fromJson(response.data);
     } catch (e) {
       print(e);
     }

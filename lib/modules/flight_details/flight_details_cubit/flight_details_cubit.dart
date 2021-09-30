@@ -1,4 +1,5 @@
 import 'package:app_passagens_aereas/modules/flight_details/flight_details_cubit/flight_details_state.dart';
+import 'package:app_passagens_aereas/modules/flight_details/models/image_model.dart';
 import 'package:app_passagens_aereas/modules/flight_details/models/ticket_model.dart';
 import 'package:app_passagens_aereas/modules/flight_details/service/flight_details_service.dart';
 import 'package:app_passagens_aereas/modules/home/models/flight_model.dart';
@@ -9,13 +10,16 @@ class FlightDetailsCubit extends Cubit<FlightDetailsState> {
 
   FlightModel? flight;
   List<TicketModel>? ticketList;
+  ImageModel? imageModel;
 
-  getFlightById(int idVoo) async {
+  getDataDetails(int idVoo, String flightClass, String destiny) async {
     emit(FlightDetailsState.load());
     flight = await FlightDetailsService().getFlightById(idVoo);
+    await getTicketsByIdAndClass(idVoo, flightClass);
+    await getLandscapeImageByFlightDestiny(destiny);
 
     if (flight != null) {
-      emit(FlightDetailsState.success(flight!, ticketList));
+      emit(FlightDetailsState.success(flight!, ticketList, imageModel!));
     } else {
       emit(FlightDetailsState.failed());
     }
@@ -29,7 +33,20 @@ class FlightDetailsCubit extends Cubit<FlightDetailsState> {
     print(ticketList);
 
     if (ticketList!.length != 0) {
-      emit(FlightDetailsState.success(flight!, ticketList));
+      emit(FlightDetailsState.success(flight!, ticketList, imageModel!));
+    } else {
+      print("Empty list");
+      emit(FlightDetailsState.failed());
+    }
+  }
+
+  getLandscapeImageByFlightDestiny(String destiny) async {
+    emit(FlightDetailsState.load());
+    imageModel =
+        await FlightDetailsService().getLandscapeImageByFlightDestiny(destiny);
+
+    if (ticketList!.length != 0) {
+      emit(FlightDetailsState.success(flight!, ticketList, imageModel!));
     } else {
       print("Empty list");
       emit(FlightDetailsState.failed());

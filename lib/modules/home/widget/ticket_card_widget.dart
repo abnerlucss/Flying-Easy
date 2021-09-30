@@ -125,6 +125,7 @@ class TicketCardWidget extends StatelessWidget {
                             context,
                             MaterialPageRoute(
                                 builder: (context) => FlightDetailsPage(
+                                      destiny: flightModel.destino,
                                       idVoo: flightModel.idVoo,
                                       idPassenger: idPassenger,
                                     )));
