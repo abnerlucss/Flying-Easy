@@ -80,7 +80,7 @@ class _PaymentPageState extends State<PaymentPage> {
                   cardExpiry: cardExpireDateController.text,
                   cardHolderName: cardHolderNameController.text,
                   cvv: cardCVVController.text,
-                  bankName: "EasyFlying Card",
+                  bankName: "Flying Easy Card",
                   cardType: CardType
                       .masterCard, // Optional if you want to override Card Type
                   showBackSide: isShowBackground,
