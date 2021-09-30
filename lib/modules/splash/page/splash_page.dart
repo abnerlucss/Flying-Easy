@@ -3,6 +3,7 @@ import 'package:app_passagens_aereas/modules/login/page/login_page.dart';
 import 'package:app_passagens_aereas/modules/onboarding/onboarding_page.dart';
 import 'package:app_passagens_aereas/modules/shared/constants/image_constants.dart';
 import 'package:flutter/material.dart';
+import 'package:page_transition/page_transition.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class SplashPage extends StatefulWidget {
@@ -26,25 +27,30 @@ class _SplashPageState extends State<SplashPage> {
       if (isLogged) {
         Navigator.pushReplacement(
           context,
-          MaterialPageRoute(
-            builder: (context) => HomePage(
-              idPassenger: onboardingPrefs.getInt('idPassenger')!,
-            ),
+          PageTransition(
+            child:
+                HomePage(idPassenger: onboardingPrefs.getInt('idPassenger')!),
+            type: PageTransitionType.topToBottom,
+            duration: Duration(milliseconds: 800),
           ),
         );
       } else {
         Navigator.pushReplacement(
           context,
-          MaterialPageRoute(
-            builder: (context) => LoginPage(),
+          PageTransition(
+            child: LoginPage(),
+            type: PageTransitionType.topToBottom,
+            duration: Duration(milliseconds: 800),
           ),
         );
       }
     } else {
       Navigator.pushReplacement(
         context,
-        MaterialPageRoute(
-          builder: (context) => OnboardingPage(),
+        PageTransition(
+          child: OnboardingPage(),
+          type: PageTransitionType.topToBottom,
+          duration: Duration(milliseconds: 800),
         ),
       );
     }
@@ -62,11 +68,10 @@ class _SplashPageState extends State<SplashPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Align(
-        child: Image.asset(
-          ImagesConstants.homeLogo,
-        ),
+        body: Align(
+      child: Image.asset(
+        ImagesConstants.homeLogo,
       ),
-    );
+    ));
   }
 }
