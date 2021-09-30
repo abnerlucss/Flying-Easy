@@ -32,7 +32,7 @@ class CustomTextField extends StatelessWidget {
           Text(
             labelTextField,
             style: TextStyle(
-              fontSize: 20,
+              fontSize: 16,
               fontWeight: FontWeight.w700,
             ),
           ),

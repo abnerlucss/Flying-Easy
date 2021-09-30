@@ -70,203 +70,208 @@ class _FlightDetailsPageState extends State<FlightDetailsPage> {
           ),
           body: LayoutBuilder(
             builder: (context, constraints) {
-              return Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Stack(
-                    children: [
-                      Image.asset(
-                        ImagesConstants.detailsBackground,
-                        height: .38 * constraints.maxHeight,
-                        width: constraints.maxWidth,
-                        fit: BoxFit.cover,
-                      ),
-                      Padding(
-                        padding:
-                            EdgeInsets.only(top: .35 * constraints.maxHeight),
-                        child: SizedBox(
-                          height: .05 * constraints.maxHeight,
+              return SingleChildScrollView(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Stack(
+                      children: [
+                        Image.asset(
+                          ImagesConstants.detailsBackground,
+                          height: .38 * constraints.maxHeight,
                           width: constraints.maxWidth,
-                          child: Container(
-                            color: Color(ColorConstants.darkPrimaryBlue),
+                          fit: BoxFit.cover,
+                        ),
+                        Padding(
+                          padding:
+                              EdgeInsets.only(top: .35 * constraints.maxHeight),
+                          child: SizedBox(
+                            height: .05 * constraints.maxHeight,
+                            width: constraints.maxWidth,
+                            child: Container(
+                              color: Color(ColorConstants.darkPrimaryBlue),
+                            ),
                           ),
                         ),
-                      ),
-                      Padding(
-                        padding:
-                            EdgeInsets.only(top: .3 * constraints.maxHeight),
-                        child: Center(
-                          child: Container(
-                            decoration: BoxDecoration(
-                              color: Color(0XFFFFFFFF),
-                              borderRadius: BorderRadius.circular(8),
-                              boxShadow: [
-                                BoxShadow(
-                                  color: Colors.grey.withOpacity(0.2),
-                                  spreadRadius: 0,
-                                  blurRadius: 0,
-                                  offset: Offset(0, 8),
-                                )
-                              ],
-                            ),
-                            height: .12 * constraints.maxHeight,
-                            width: .9 * constraints.maxWidth,
-                            child: Padding(
-                              padding:
-                                  const EdgeInsets.symmetric(horizontal: 15),
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Text(
-                                    "${flight.partida}",
-                                    style: TextStyle(
-                                      fontSize: 20,
-                                    ),
-                                  ),
-                                  SizedBox(
-                                    width: 10,
-                                  ),
-                                  RotatedBox(
-                                    quarterTurns: 1,
-                                    child: Icon(
-                                      Icons.flight,
-                                      size: 35,
-                                    ),
-                                  ),
-                                  SizedBox(
-                                    width: 10,
-                                  ),
-                                  Text(
-                                    "${flight.destino}",
-                                    style: TextStyle(
-                                      fontSize: 20,
-                                    ),
-                                  ),
+                        Padding(
+                          padding:
+                              EdgeInsets.only(top: .3 * constraints.maxHeight),
+                          child: Center(
+                            child: Container(
+                              decoration: BoxDecoration(
+                                color: Color(0XFFFFFFFF),
+                                borderRadius: BorderRadius.circular(8),
+                                boxShadow: [
+                                  BoxShadow(
+                                    color: Colors.grey.withOpacity(0.2),
+                                    spreadRadius: 0,
+                                    blurRadius: 0,
+                                    offset: Offset(0, 8),
+                                  )
                                 ],
                               ),
-                            ),
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                  SizedBox(
-                    height: .02 * constraints.maxHeight,
-                  ),
-                  Padding(
-                    padding: EdgeInsets.symmetric(
-                        horizontal: .05 * constraints.maxWidth),
-                    child: RichText(
-                      text: TextSpan(
-                        style: TextStyle(
-                          color: Color(0XFF000000),
-                          fontSize: 16,
-                          height: 2,
-                        ),
-                        children: [
-                          TextSpan(
-                            text: "Aeroporto: ",
-                            style: TextStyle(fontWeight: FontWeight.bold),
-                          ),
-                          TextSpan(text: "${flight.aeroporto}\n"),
-                          TextSpan(
-                            text: "Data do embarque: ",
-                            style: TextStyle(fontWeight: FontWeight.bold),
-                          ),
-                          TextSpan(
-                              text:
-                                  "${DateFormat('dd/M/y').format(flight.dataHoraEmbarque)}\n"),
-                          TextSpan(
-                            text: "Hora do embarque: ",
-                            style: TextStyle(fontWeight: FontWeight.bold),
-                          ),
-                          TextSpan(
-                              text:
-                                  "${DateFormat('dd/M/y').format(flight.dataHoraDesembarque)}\n"),
-                          TextSpan(
-                            text: "Hora do desembarque: ",
-                            style: TextStyle(fontWeight: FontWeight.bold),
-                          ),
-                          TextSpan(
-                              text:
-                                  "${DateFormat.jm().format(flight.dataHoraEmbarque)}\n"),
-                          TextSpan(
-                            text: "Companhia Aérea: ",
-                            style: TextStyle(fontWeight: FontWeight.bold),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                  SizedBox(
-                    height: .02 * constraints.maxHeight,
-                  ),
-                  Padding(
-                    padding: EdgeInsets.symmetric(
-                      horizontal: .05 * constraints.maxWidth,
-                    ),
-                    child: Image.asset(
-                      TicketCardWidget.checkCompanyLogo(
-                        flight.identificadorCompanhia,
-                      ),
-                      height: .06 * constraints.maxHeight,
-                      fit: BoxFit.cover,
-                    ),
-                  ),
-                  SizedBox(
-                    height: .02 * constraints.maxHeight,
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      DetailsButtonWidget(
-                        title: "Classe: $titleClass",
-                        onpress: () {
-                          showModalFlightClass(context);
-                        },
-                      ),
-                      SizedBox(
-                        width: 15,
-                      ),
-                      DetailsButtonWidget(
-                        title:
-                            "Número do assento: ${ticket == null ? "" : ticket!.numeroAssento}",
-                        onpress: () {
-                          showModalFlightSeats(context);
-                        },
-                      ),
-                    ],
-                  ),
-                  SizedBox(
-                    height: .03 * constraints.maxHeight,
-                  ),
-                  Center(
-                    child: PayButtonWidget(
-                      flightModel: flight,
-                      title: "Comprar",
-                      onpress: () {
-                        if (ticket == null) {
-                          ScaffoldMessenger.of(context).showSnackBar(
-                            const SnackBar(
-                              content: Text('Selecione o número do assento'),
-                            ),
-                          );
-                        } else {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => PaymentPage(
-                                idPassenger: widget.idPassenger,
-                                ticketModel: ticket!,
+                              height: .12 * constraints.maxHeight,
+                              width: .9 * constraints.maxWidth,
+                              child: Padding(
+                                padding:
+                                    const EdgeInsets.symmetric(horizontal: 15),
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Text(
+                                      "${flight.partida}",
+                                      style: TextStyle(
+                                        fontSize: 20,
+                                      ),
+                                    ),
+                                    SizedBox(
+                                      width: 10,
+                                    ),
+                                    RotatedBox(
+                                      quarterTurns: 1,
+                                      child: Icon(
+                                        Icons.flight,
+                                        size: 35,
+                                      ),
+                                    ),
+                                    SizedBox(
+                                      width: 10,
+                                    ),
+                                    Text(
+                                      "${flight.destino}",
+                                      style: TextStyle(
+                                        fontSize: 20,
+                                      ),
+                                    ),
+                                  ],
+                                ),
                               ),
                             ),
-                          );
-                        }
-                      },
-                      seatClass: titleClass,
+                          ),
+                        ),
+                      ],
                     ),
-                  ),
-                ],
+                    SizedBox(
+                      height: .02 * constraints.maxHeight,
+                    ),
+                    Padding(
+                      padding: EdgeInsets.symmetric(
+                          horizontal: .05 * constraints.maxWidth),
+                      child: RichText(
+                        text: TextSpan(
+                          style: TextStyle(
+                            color: Color(0XFF000000),
+                            fontSize: 16,
+                            height: 2,
+                          ),
+                          children: [
+                            TextSpan(
+                              text: "Aeroporto: ",
+                              style: TextStyle(fontWeight: FontWeight.bold),
+                            ),
+                            TextSpan(text: "${flight.aeroporto}\n"),
+                            TextSpan(
+                              text: "Data do embarque: ",
+                              style: TextStyle(fontWeight: FontWeight.bold),
+                            ),
+                            TextSpan(
+                                text:
+                                    "${DateFormat('dd/M/y').format(flight.dataHoraEmbarque)}\n"),
+                            TextSpan(
+                              text: "Hora do embarque: ",
+                              style: TextStyle(fontWeight: FontWeight.bold),
+                            ),
+                            TextSpan(
+                                text:
+                                    "${DateFormat('dd/M/y').format(flight.dataHoraDesembarque)}\n"),
+                            TextSpan(
+                              text: "Hora do desembarque: ",
+                              style: TextStyle(fontWeight: FontWeight.bold),
+                            ),
+                            TextSpan(
+                                text:
+                                    "${DateFormat.jm().format(flight.dataHoraEmbarque)}\n"),
+                            TextSpan(
+                              text: "Companhia Aérea: ",
+                              style: TextStyle(fontWeight: FontWeight.bold),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                    SizedBox(
+                      height: .02 * constraints.maxHeight,
+                    ),
+                    Padding(
+                      padding: EdgeInsets.symmetric(
+                        horizontal: .05 * constraints.maxWidth,
+                      ),
+                      child: Image.asset(
+                        TicketCardWidget.checkCompanyLogo(
+                          flight.identificadorCompanhia,
+                        ),
+                        height: .06 * constraints.maxHeight,
+                        fit: BoxFit.cover,
+                      ),
+                    ),
+                    SizedBox(
+                      height: .02 * constraints.maxHeight,
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        DetailsButtonWidget(
+                          title: "Classe: $titleClass",
+                          onpress: () {
+                            showModalFlightClass(context);
+                          },
+                        ),
+                        SizedBox(
+                          width: 15,
+                        ),
+                        DetailsButtonWidget(
+                          title:
+                              "Número do assento: ${ticket == null ? "" : ticket!.numeroAssento}",
+                          onpress: () {
+                            showModalFlightSeats(context);
+                          },
+                        ),
+                      ],
+                    ),
+                    SizedBox(
+                      height: .03 * constraints.maxHeight,
+                    ),
+                    Center(
+                      child: PayButtonWidget(
+                        flightModel: flight,
+                        title: "Comprar",
+                        onpress: () {
+                          if (ticket == null) {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              const SnackBar(
+                                content: Text('Selecione o número do assento'),
+                              ),
+                            );
+                          } else {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => PaymentPage(
+                                  idPassenger: widget.idPassenger,
+                                  ticketModel: ticket!,
+                                ),
+                              ),
+                            );
+                          }
+                        },
+                        seatClass: titleClass,
+                      ),
+                    ),
+                    SizedBox(
+                      height: 30,
+                    ),
+                  ],
+                ),
               );
             },
           ),

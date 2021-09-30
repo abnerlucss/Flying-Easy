@@ -7,10 +7,12 @@ import 'package:app_passagens_aereas/modules/onboarding/onboarding_page.dart';
 import 'package:app_passagens_aereas/modules/shared/util/basic_state_enum.dart';
 import 'package:app_passagens_aereas/modules/shared/widgets/base_view.dart';
 import 'package:app_passagens_aereas/modules/shared/widgets/blue_button.dart';
+import 'package:app_passagens_aereas/modules/shared/widgets/spacing_txt_fields.dart';
 import 'package:app_passagens_aereas/modules/shared/widgets/steps_widget.dart';
 import 'package:app_passagens_aereas/modules/shared/widgets/white_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class BasicCreateAccount extends StatefulWidget {
   const BasicCreateAccount({
@@ -45,11 +47,18 @@ class BasicCreateAccount extends StatefulWidget {
 class _BasicCreateAccountState extends State<BasicCreateAccount> {
   final _formKey = GlobalKey<FormState>();
 
+  void setIdPassenger(int idPassenger) async {
+    SharedPreferences accountPrefs = await SharedPreferences.getInstance();
+    accountPrefs.setInt('idPassenger', idPassenger);
+  }
+
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<CreateAccountCubit, LoginState>(
       listener: (context, state) {
         if (state.state == BasicStateEnum.success) {
+          setIdPassenger(state.idPassenger!);
+
           Navigator.pushReplacement(
             context,
             MaterialPageRoute(
@@ -118,9 +127,7 @@ class _BasicCreateAccountState extends State<BasicCreateAccount> {
                 ),
               ],
             ),
-            SizedBox(
-              height: .35 * MediaQuery.of(context).size.height,
-            ),
+            SpacingTextFormFields(),
           ],
         );
       },

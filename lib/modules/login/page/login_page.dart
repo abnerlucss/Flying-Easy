@@ -12,6 +12,7 @@ import 'package:app_passagens_aereas/modules/shared/widgets/white_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({Key? key}) : super(key: key);
@@ -119,7 +120,7 @@ class _LoginPageState extends State<LoginPage> {
               ),
             ),
             SizedBox(
-              height: .28 * MediaQuery.of(context).size.height,
+              height: .20 * MediaQuery.of(context).size.height,
             ),
           ],
         );
@@ -154,14 +155,19 @@ class _LoginPageState extends State<LoginPage> {
     );
   }
 
-  void checkState(LoginState state, BuildContext context) {
+  void checkState(LoginState state, BuildContext context) async {
     if (state.state == BasicStateEnum.success) {
+      SharedPreferences loginPrefs = await SharedPreferences.getInstance();
+      loginPrefs.setInt('idPassenger', state.idPassenger!);
+
       Navigator.pushReplacement(
-          context,
-          MaterialPageRoute(
-              builder: (context) => HomePage(
-                    idPassenger: state.idPassenger!,
-                  )));
+        context,
+        MaterialPageRoute(
+          builder: (context) => HomePage(
+            idPassenger: state.idPassenger!,
+          ),
+        ),
+      );
     } else if (state.state == BasicStateEnum.failed) {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(content: Text('Login e/ou senha inválidos')),

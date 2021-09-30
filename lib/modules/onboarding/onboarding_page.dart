@@ -1,3 +1,4 @@
+import 'package:app_passagens_aereas/modules/home/page/home_page.dart';
 import 'package:app_passagens_aereas/modules/login/page/login_page.dart';
 import 'package:app_passagens_aereas/modules/onboarding/widgets/basic_onboarding.dart';
 import 'package:app_passagens_aereas/modules/shared/constants/image_constants.dart';
@@ -5,6 +6,7 @@ import 'package:app_passagens_aereas/modules/shared/widgets/steps_widget.dart';
 import 'package:app_passagens_aereas/modules/shared/widgets/white_button.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class OnboardingPage extends StatefulWidget {
   const OnboardingPage({Key? key}) : super(key: key);
@@ -14,6 +16,11 @@ class OnboardingPage extends StatefulWidget {
 }
 
 class _OnboardingPageState extends State<OnboardingPage> {
+  @override
+  void initState() {
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

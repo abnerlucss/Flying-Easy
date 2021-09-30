@@ -1,8 +1,14 @@
+import 'package:app_passagens_aereas/modules/home/models/passenger_model.dart';
+import 'package:app_passagens_aereas/modules/login/page/login_page.dart';
 import 'package:app_passagens_aereas/modules/shared/constants/color_constants.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class HomeDrawerWidget extends StatefulWidget {
-  const HomeDrawerWidget({Key? key}) : super(key: key);
+  const HomeDrawerWidget({Key? key, required this.passengerModel})
+      : super(key: key);
+
+  final PassengerModel passengerModel;
 
   @override
   _HomeDrawerWidgetState createState() => _HomeDrawerWidgetState();
@@ -38,7 +44,7 @@ class _HomeDrawerWidgetState extends State<HomeDrawerWidget> {
               size: 120,
             ),
             Text(
-              "Username",
+              widget.passengerModel.nome,
               style: TextStyle(
                 fontSize: 22,
                 color: Color(ColorConstants.darkPrimaryBlue),
@@ -72,6 +78,27 @@ class _HomeDrawerWidgetState extends State<HomeDrawerWidget> {
               title: Text('Sobre nós'),
               onTap: () {},
             ),
+            Spacer(),
+            ListTile(
+              leading: Icon(Icons.logout),
+              title: Text('Sair'),
+              onTap: () async {
+                SharedPreferences homePrefs =
+                    await SharedPreferences.getInstance();
+
+                homePrefs.remove('idPassenger');
+
+                Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => LoginPage(),
+                  ),
+                );
+              },
+            ),
+            SizedBox(
+              height: 30,
+            )
           ],
         ),
       ),

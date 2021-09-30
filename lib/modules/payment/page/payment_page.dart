@@ -11,6 +11,7 @@ import 'package:app_passagens_aereas/modules/shared/widgets/pay_button_widget.da
 import 'package:awesome_card/awesome_card.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 
 class PaymentPage extends StatefulWidget {
   const PaymentPage({
@@ -33,6 +34,15 @@ class _PaymentPageState extends State<PaymentPage> {
   final cardCVVController = TextEditingController();
   bool isShowBackground = false;
   final cvvFocusNode = FocusNode();
+
+  final maskDate = new MaskTextInputFormatter(
+      mask: '##/##', filter: {"#": RegExp(r'[0-9]')});
+
+  final maskCardNumber = new MaskTextInputFormatter(
+      mask: '#### #### #### ####', filter: {"#": RegExp(r'[0-9]')});
+
+  final maskCVVNumber =
+      new MaskTextInputFormatter(mask: '###', filter: {"#": RegExp(r'[0-9]')});
 
   GlobalKey<FormState> _cardFormKey = GlobalKey<FormState>();
 
@@ -68,7 +78,7 @@ class _PaymentPageState extends State<PaymentPage> {
                 CreditCard(
                   cardNumber: cardNumberController.text,
                   cardExpiry: cardExpireDateController.text,
-                  cardHolderName: "Nome impresso no cartão",
+                  cardHolderName: cardHolderNameController.text,
                   cvv: cardCVVController.text,
                   bankName: "EasyFlying Card",
                   cardType: CardType
@@ -105,73 +115,73 @@ class _PaymentPageState extends State<PaymentPage> {
                     );
                   },
                   key: _cardFormKey,
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 20),
-                    child: Column(
-                      children: [
-                        CustomTextField(
-                          labelTextField: "Número do cartão",
-                          textInputType: TextInputType.number,
-                          controller: cardNumberController,
-                          validator: (text) {
-                            if (text!.isEmpty)
-                              return "O número do cartão não pode ser nulo";
-                          },
-                        ),
-                        SizedBox(
-                          height: 20,
-                        ),
-                        CustomTextField(
-                          labelTextField: "Data de Vencimento",
-                          textInputType: TextInputType.number,
-                          controller: cardExpireDateController,
-                          validator: (text) {
-                            if (text!.isEmpty)
-                              return "Preencha a data de vencimento";
-                          },
-                        ),
-                        SizedBox(
-                          height: 20,
-                        ),
-                        CustomTextField(
-                          labelTextField: "Nome impresso",
-                          textInputType: TextInputType.name,
-                          controller: cardHolderNameController,
-                          validator: (text) {
-                            if (text!.isEmpty) return "Preencha o nome";
-                          },
-                        ),
-                        SizedBox(
-                          height: 20,
-                        ),
-                        CustomTextField(
-                          focusNode: cvvFocusNode,
-                          labelTextField: "Código de segurança",
-                          textInputType: TextInputType.number,
-                          controller: cardCVVController,
-                          validator: (text) {
-                            if (text!.isEmpty) return "Preencha o CVV";
-                          },
-                        ),
-                        SizedBox(
-                          height: 20,
-                        ),
-                        PayButtonWidget(
-                          title: "Pagar",
-                          ticketModelPrice: widget.ticketModel!.preco,
-                          onpress: () {
-                            if (!_cardFormKey.currentState!.validate()) {
-                              onTapFailed(context);
-                            } else {
-                              onTap(context);
-                            }
-                          },
-                        ),
-                        SizedBox(
-                          height: 20,
-                        ),
-                      ],
-                    ),
+                  child: Column(
+                    children: [
+                      CustomTextField(
+                        formatter: maskCardNumber,
+                        labelTextField: "Número do cartão",
+                        textInputType: TextInputType.number,
+                        controller: cardNumberController,
+                        validator: (text) {
+                          if (text!.isEmpty)
+                            return "O número do cartão não pode ser nulo";
+                        },
+                      ),
+                      SizedBox(
+                        height: 20,
+                      ),
+                      CustomTextField(
+                        formatter: maskDate,
+                        labelTextField: "Data de Vencimento",
+                        textInputType: TextInputType.number,
+                        controller: cardExpireDateController,
+                        validator: (text) {
+                          if (text!.isEmpty)
+                            return "Preencha a data de vencimento";
+                        },
+                      ),
+                      SizedBox(
+                        height: 20,
+                      ),
+                      CustomTextField(
+                        labelTextField: "Nome impresso",
+                        textInputType: TextInputType.name,
+                        controller: cardHolderNameController,
+                        validator: (text) {
+                          if (text!.isEmpty) return "Preencha o nome";
+                        },
+                      ),
+                      SizedBox(
+                        height: 20,
+                      ),
+                      CustomTextField(
+                        formatter: maskCVVNumber,
+                        focusNode: cvvFocusNode,
+                        labelTextField: "Código de segurança",
+                        textInputType: TextInputType.number,
+                        controller: cardCVVController,
+                        validator: (text) {
+                          if (text!.isEmpty) return "Preencha o CVV";
+                        },
+                      ),
+                      SizedBox(
+                        height: 20,
+                      ),
+                      PayButtonWidget(
+                        title: "Pagar",
+                        ticketModelPrice: widget.ticketModel!.preco,
+                        onpress: () {
+                          if (!_cardFormKey.currentState!.validate()) {
+                            onTapFailed(context);
+                          } else {
+                            onTap(context);
+                          }
+                        },
+                      ),
+                      SizedBox(
+                        height: 30,
+                      ),
+                    ],
                   ),
                 )
               ],
@@ -195,7 +205,7 @@ class _PaymentPageState extends State<PaymentPage> {
   void onTapFailed(BuildContext context) {
     ScaffoldMessenger.of(context).showSnackBar(
       const SnackBar(
-        content: Text('Preencha todos os campos'),
+        content: Text('Preencha os campos corretamente'),
       ),
     );
   }
@@ -215,7 +225,9 @@ class _PaymentPageState extends State<PaymentPage> {
       Navigator.pushReplacement(
         context,
         MaterialPageRoute(
-          builder: (context) => PaymentSuccessPage(),
+          builder: (context) => PaymentSuccessPage(
+            idPassenger: widget.idPassenger,
+          ),
         ),
       );
     } else if (state.state == BasicStateEnum.failed) {

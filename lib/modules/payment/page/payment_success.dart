@@ -1,10 +1,12 @@
+import 'package:app_passagens_aereas/modules/home/page/home_page.dart';
 import 'package:app_passagens_aereas/modules/shared/constants/color_constants.dart';
-import 'package:app_passagens_aereas/modules/shared/widgets/blue_button.dart';
 import 'package:flutter/material.dart';
 
 class PaymentSuccessPage extends StatefulWidget {
-  const PaymentSuccessPage({Key? key}) : super(key: key);
+  const PaymentSuccessPage({Key? key, required this.idPassenger})
+      : super(key: key);
 
+  final int idPassenger;
   @override
   _PaymentSuccessPageState createState() => _PaymentSuccessPageState();
 }
@@ -53,7 +55,15 @@ class _PaymentSuccessPageState extends State<PaymentSuccessPage> {
               height: 30,
             ),
             ElevatedButton(
-              onPressed: () {},
+              onPressed: () {
+                Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) =>
+                        HomePage(idPassenger: widget.idPassenger),
+                  ),
+                );
+              },
               style: ButtonStyle(
                 backgroundColor: MaterialStateProperty.all(Color(0xFF4B6584)),
                 fixedSize: MaterialStateProperty.all(

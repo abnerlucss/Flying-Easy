@@ -20,9 +20,9 @@ class _HomePageState extends State<HomePage> {
   @override
   void initState() {
     super.initState();
-    print(widget.idPassenger);
 
     BlocProvider.of<HomeCubit>(context).getAllFlights();
+    BlocProvider.of<HomeCubit>(context).getPassengerById(widget.idPassenger);
   }
 
   @override
@@ -37,6 +37,7 @@ class _HomePageState extends State<HomePage> {
         }
 
         final list = state.flights;
+        final passenger = state.passengerModel;
         return Scaffold(
           backgroundColor: Color(0XFFFFFFFF),
           appBar: AppBar(
@@ -51,7 +52,9 @@ class _HomePageState extends State<HomePage> {
               ),
             ],
           ),
-          drawer: HomeDrawerWidget(),
+          drawer: HomeDrawerWidget(
+            passengerModel: passenger!,
+          ),
           body: ListView.builder(
             itemBuilder: (context, index) {
               final flight = list[index];

@@ -30,14 +30,15 @@ class _CustomTextFieldPasswordState extends State<CustomTextFieldPassword> {
           Text(
             widget.labelTextField,
             style: TextStyle(
-              fontSize: 20,
+              fontSize: 16,
               fontWeight: FontWeight.w700,
             ),
           ),
           Container(
             decoration: new BoxDecoration(
-                color: Color(0XFFF1F1F1),
-                borderRadius: new BorderRadius.circular(8.0)),
+              color: Color(0XFFF1F1F1),
+              borderRadius: new BorderRadius.circular(8.0),
+            ),
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 15),
               child: TextFormField(
