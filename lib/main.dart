@@ -12,7 +12,10 @@ import 'package:responsive_framework/responsive_wrapper.dart';
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
   SystemChrome.setPreferredOrientations(
-    [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown],
+    [
+      DeviceOrientation.portraitUp,
+      DeviceOrientation.portraitDown,
+    ],
   );
 
   SystemChrome.setSystemUIOverlayStyle(
@@ -51,8 +54,6 @@ class MyApp extends StatelessWidget {
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
         builder: (context, widget) {
-          print(MediaQuery.of(context).size.width);
-
           return ResponsiveWrapper.builder(
             widget,
             maxWidth: 1200,
@@ -63,7 +64,7 @@ class MyApp extends StatelessWidget {
             ],
           );
         },
-        title: 'Passagens Aéreas',
+        title: 'Flying Easy',
         theme: ThemeData(
           fontFamily: 'OpenSans',
           primarySwatch: Colors.blue,

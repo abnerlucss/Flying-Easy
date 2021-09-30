@@ -1,7 +1,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.app_passagens_aereas">
    <application
-        android:label="app_passagens_aereas"
+        android:label="Flying Easy"
         android:icon="@mipmap/ic_launcher">
         <activity
             android:name=".MainActivity"

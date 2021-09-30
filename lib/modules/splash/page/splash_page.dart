@@ -53,7 +53,10 @@ class _SplashPageState extends State<SplashPage> {
   @override
   void initState() {
     super.initState();
-    checkFirstAcess();
+
+    Future.delayed(const Duration(milliseconds: 3500), () {
+      checkFirstAcess();
+    });
   }
 
   @override
